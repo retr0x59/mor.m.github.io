@@ -3,8 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>retr0x59.sec // Offensive Security & Pentesting</title>
+  <title>retr0x59.sec // Offensive Security Portfolio</title>
   <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -17,8 +20,11 @@
       <nav class="links" id="nav-links">
         <a href="index.html" class="on">Home</a>
         <a href="about.html">About</a>
-        <a href="projects.html">Projects & Labs</a>
-        <a href="certificates.html">Certifications</a>
+        <a href="projects.html">Projects</a>
+        <a href="services.html">Services</a>
+        <a href="methodology.html">Methodology</a>
+        <a href="writeups.html">Writeups</a>
+        <a href="certificates.html">Certificates</a>
         <a href="contact.html">Contact</a>
       </nav>
       <div class="tools">
@@ -32,16 +38,16 @@
     <section class="hero">
       <div class="wrap">
         <div class="hero-text">
-          <div class="boot">[ OK ] <span>ENCRYPTED CONNECTION · ACTIVE SESSION</span></div>
-          <h1>Pentesting & <em>Offensive Sec</em></h1>
-          <div class="typed" id="typed-text">C | Python | Assembly | Binary Exploitation</div>
+          <div class="boot">[ OK ] <span>ACCESS GRANTED · ENCRYPTED SESSION</span></div>
+          <h1>retr0x59 <em>Offensive Sec</em></h1>
+          <div class="typed" id="typed-text">Pentesting | Low-Level Dev | Reverse Engineering</div>
           <p class="lead">
-            Specialized in security assessments, vulnerability research, exploit development, and low-level reverse engineering.
+            Offensive security practitioner focused on penetration testing, vulnerability research, and binary exploitation (C, Python, Assembly).
           </p>
 
           <div class="cta">
-            <a href="projects.html" class="btn primary">View Projects & Labs</a>
-            <a href="contact.html" class="btn line">Secure Contact</a>
+            <a href="projects.html" class="btn primary">View Projects</a>
+            <a href="about.html" class="btn line">About Me</a>
           </div>
 
           <div class="socials">
@@ -51,21 +57,22 @@
           </div>
         </div>
 
-        <!-- Avatar / Radar Effects -->
+        <!-- Avatar / Radar -->
         <div class="avatar">
           <div class="ring r1"></div>
           <div class="ring r2"></div>
           <div class="ring r3"></div>
+          <div class="ring r4"></div>
           <div class="orbit"></div>
           <div class="scanbar"></div>
           <img src="assets/img/avatar.jpg" alt="retr0x59 Avatar" onerror="this.src='https://via.placeholder.com/300/0b182c/4d8dff?text=>_retr0x59'">
           <div class="tag-float t1">STATUS: <i>ONLINE</i></div>
-          <div class="tag-float t2">TARGET: <i>OFFENSIVE_SEC</i></div>
+          <div class="tag-float t2">TARGET: <i>CPTS / HTB</i></div>
         </div>
       </div>
     </section>
 
-    <!-- Metrics Bar -->
+    <!-- Strip Bar -->
     <section class="strip">
       <div class="wrap">
         <div class="cell">
@@ -73,11 +80,11 @@
           <div class="v">Pentesting <small>& Exploitation</small></div>
         </div>
         <div class="cell">
-          <div class="k">Languages</div>
+          <div class="k">Core Languages</div>
           <div class="v">C / Python <small>Assembly x86/x64</small></div>
         </div>
         <div class="cell">
-          <div class="k">Environments</div>
+          <div class="k">Environment</div>
           <div class="v">Linux / Kali <small>GDB / Pwntools / GEF</small></div>
         </div>
         <div class="cell">
@@ -87,35 +94,24 @@
       </div>
     </section>
 
-    <!-- Interactive Terminal -->
+    <!-- Terminal Section -->
     <section class="block">
       <div class="wrap">
         <div class="head">
           <div>
-            <div class="eyebrow">Local Terminal</div>
-            <h2>Diagnostic Console</h2>
+            <div class="eyebrow">Interactive Shell</div>
+            <h2>whoami</h2>
           </div>
+          <p>This terminal evaluates your session locally. All scripts run entirely client-side.</p>
         </div>
 
         <div class="term">
           <div class="term-bar">
             <i></i><i></i><i></i>
-            <span>retr0x59@kali: ~</span>
+            <span>retr0x59@kali: ~/portfolio</span>
             <span class="live">● LIVE</span>
           </div>
-          <div class="term-body" id="console-output"><span class="p">retr0x59@kali:~$</span> <span class="c">whoami</span>
-<span class="g">retr0x59 - Pentester, Security Researcher & Low-Level Dev</span>
-
-<span class="p">retr0x59@kali:~$</span> <span class="c">cat target_focus.json</span>
-<span class="o">{</span>
-  <span class="y">"areas"</span>: <span class="g">["Network Pentesting", "Binary Exploitation", "Web App Audits"]</span>,
-  <span class="y">"tools"</span>: <span class="g">["GDB", "Pwntools", "Burp Suite", "Nmap", "Metasploit"]</span>,
-  <span class="y">"opsec"</span>: <span class="g">"STRICT_COMPLIANCE_ENABLED"</span>
-<span class="o">}</span>
-
-<span class="p">retr0x59@kali:~$</span> <span class="c">sys_scan --visitor</span>
-<span class="o">[+] Analyzing local visitor session...</span>
-<span class="g">[+] Status: Clean session, successfully encrypted.</span></div>
+          <div class="term-body" id="console-output"></div>
         </div>
       </div>
     </section>
