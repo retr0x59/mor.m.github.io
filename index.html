@@ -37,7 +37,7 @@
       </div>
       <p class="out in" style="--i:2;margin-top:22px">ELF 64-bit LSB executable, x86-64, dynamically linked, not stripped</p>
       <p class="lead in" style="--i:3">
-        Learning offensive security from the byte level up. I take binaries and networks apart to understand how they work, in C, Python and x86-64 assembly.
+        I am learning ethical hacking: how attackers break into computer systems, so those systems can be fixed and protected. This site shows what I have learned so far and where I am going.
       </p>
       <div class="cta in" style="--i:4">
         <a class="btn solid" href="journey.html">./journey</a>
@@ -47,6 +47,17 @@
     </section>
 
     <section class="panel wrap">
+      <h2 class="ctx">what I do, in plain words</h2>
+      <dl class="plainlist">
+        <dt>Network &amp; system administration</dt>
+        <dd>Building and running the networks and servers an organization depends on: connecting the machines, managing accounts and email, keeping everything working. This is what I was trained for.</dd>
+        <dt>Penetration testing</dt>
+        <dd>Testing the security of a system with its owner's permission, the way a locksmith checks whether your locks can be picked. The goal is to find the weak points before a real attacker does.</dd>
+        <dt>Reverse engineering</dt>
+        <dd>Taking a program apart to understand how it works when nobody gives you the plans. It is how you find out what unknown or suspicious software really does.</dd>
+        <dt>Binary exploitation</dt>
+        <dd>Finding programming mistakes inside software and showing how they could be abused, so they can be corrected.</dd>
+      </dl>
       <h2 class="ctx">two tracks</h2>
       <div class="tracks">
         <article class="track solid">
@@ -71,24 +82,24 @@
         <div class="output" id="termOut" aria-live="polite"></div>
         <div class="input"><label for="termIn" id="termPs">$</label><input id="termIn" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="help"></div>
       </div>
-      <p class="hint">This shell is live, and there is a flag hidden on this site. Start with <span class="out">ls -a</span>.</p>
+      <p class="hint">This is a working terminal, like the ones I use every day: type <span class="out">help</span> and press Enter. There is also a small puzzle hidden in it, as in hacking competitions. Start with <span class="out">ls -a</span>.</p>
     </section>
 
     <section class="panel wrap">
-      <h2 class="ctx">registers</h2>
+      <h2 class="ctx">at a glance</h2>
       <dl class="regs">
         <dt>focus</dt><dd>pentesting <small>&amp; exploitation</small></dd>
         <dt>langs</dt><dd>C / Python <small>/ x86-64 assembly</small></dd>
         <dt>env</dt><dd>Linux <small>· GDB / GEF / pwntools</small></dd>
         <dt>labs</dt><dd>Hack The Box <small>· pwn.college · OST2</small></dd>
-        <dt>goal</dt><dd>HTB CPTS <small>← in progress</small></dd>
+        <dt>goal</dt><dd>HTB CPTS <small>← a professional ethical-hacking certification, in progress</small></dd>
       </dl>
     </section>
 
     <section class="panel wrap">
-      <h2 class="ctx">memory</h2>
+      <h2 class="ctx">memory, up close</h2>
       <pre class="hex" id="hex">retr0x59 :: learning offensive security. pentesting, reverse engineering, binary exploitation. C / python / x86-64 asm. target: HTB CPTS.</pre>
-      <p class="hint">This memory is writable: click a byte and type to patch it, on the hex or the ASCII side. <button class="link" id="hexReset" type="button">reset</button></p>
+      <p class="hint">This is how a computer stores text: each pair of characters on the left is one letter on the right. Click one and type to change it. <button class="link" id="hexReset" type="button">reset</button></p>
     </section>
   </main>
 

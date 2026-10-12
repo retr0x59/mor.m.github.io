@@ -32,26 +32,26 @@
     <section class="page-hero wrap">
       <p class="cmd in">gdb -q ./journey</p>
       <h1 class="in" style="--i:1">My path, one step at a time</h1>
-      <p class="lead in" style="--i:2">I am still learning. This is where I started, where I am now, and what comes next. Step through it like a debugger.</p>
+      <p class="lead in" style="--i:2">I am still learning. This page shows where I started, where I am now, and what comes next. Each step is explained in plain words first, then in technical terms. Click a step to read it.</p>
     </section>
 
     <section class="panel wrap">
-      <h2 class="ctx">disas journey</h2>
+      <h2 class="ctx">my steps</h2>
       <p class="progress" id="progress">[=======···] 4/6 steps done</p>
       <div class="dbg" id="dbg">
         <div>
           <ol class="frames" id="frames">
-            <li class="done"><button type="button" aria-controls="s0"><span class="addr">0x00</span><span class="fn">net_sysadmin</span><span class="st">done</span></button></li>
-            <li class="done"><button type="button" aria-controls="s1"><span class="addr">0x01</span><span class="fn">linux_foundations</span><span class="st">done</span></button></li>
-            <li class="done"><button type="button" aria-controls="s2"><span class="addr">0x02</span><span class="fn">binary_exploitation</span><span class="st">done</span></button></li>
-            <li class="done"><button type="button" aria-controls="s3"><span class="addr">0x03</span><span class="fn">htb_academy</span><span class="st">done</span></button></li>
-            <li class="now"><button type="button" aria-controls="s4"><span class="addr">0x04</span><span class="fn">cpts</span><span class="st">in progress</span></button></li>
-            <li class="todo"><button type="button" aria-controls="s5"><span class="addr">0x05</span><span class="fn">advanced_research</span><span class="st">planned</span></button></li>
+            <li class="done"><button type="button" aria-controls="s0"><span class="addr">0x00</span><span class="fn">Net admin &amp; sysadmin</span><span class="st">done</span></button></li>
+            <li class="done"><button type="button" aria-controls="s1"><span class="addr">0x01</span><span class="fn">Foundations</span><span class="st">done</span></button></li>
+            <li class="done"><button type="button" aria-controls="s2"><span class="addr">0x02</span><span class="fn">Taking programs apart</span><span class="st">done</span></button></li>
+            <li class="done"><button type="button" aria-controls="s3"><span class="addr">0x03</span><span class="fn">Hacking school</span><span class="st">done</span></button></li>
+            <li class="now"><button type="button" aria-controls="s4"><span class="addr">0x04</span><span class="fn">Certification</span><span class="st">in progress</span></button></li>
+            <li class="todo"><button type="button" aria-controls="s5"><span class="addr">0x05</span><span class="fn">Going deeper</span><span class="st">planned</span></button></li>
           </ol>
           <div class="ctl" id="ctl" hidden>
             <button class="btn" type="button" data-go="prev">← prev <kbd>p</kbd></button>
             <button class="btn" type="button" data-go="next">next <kbd>n</kbd> →</button>
-            <button class="btn solid" type="button" data-go="rip">continue <kbd>c</kbd></button>
+            <button class="btn solid" type="button" data-go="rip">where I am now <kbd>c</kbd></button>
           </div>
         </div>
         <div class="stages">
@@ -59,42 +59,54 @@
               <p class="cmd">x/s 0x00 &lt;net_sysadmin&gt;</p>
               <h3>Network &amp; System Administration</h3>
               <p class="st">done</p>
-              <p>Formal training, graduated: routing and switching at CCNA level, network administration, system administration, Active Directory and Exchange. This is my strongest ground and where everything else started.</p>
+              <p class="plain">I was formally trained, and graduated, to build and run the networks and servers an organization depends on: connecting the machines, managing user accounts and email, and keeping it all working. This is my strongest ground and where everything else started.</p>
+              <p class="tech-label">in technical terms</p>
+              <p class="tech">Routing and switching at CCNA level, network administration, system administration, Active Directory and Exchange.</p>
               <dl class="regs"><dt>networks</dt><dd>routers, switches, CCNA-level routing &amp; switching</dd><dt>systems</dt><dd>Active Directory, Exchange, system administration</dd></dl>
             </article>
             <article class="stage done" id="s1">
               <p class="cmd">x/s 0x01 &lt;linux_foundations&gt;</p>
               <h3>Linux &amp; Low-Level Foundations</h3>
               <p class="st">done</p>
-              <p>Deep dive into C programming, Assembly x86/x64, Linux internals, and core networking concepts.</p>
+              <p class="plain">I learned how computers really work under the hood: the Linux operating system, the C language most systems are written in, and assembly, the raw instructions a processor executes.</p>
+              <p class="tech-label">in technical terms</p>
+              <p class="tech">Deep dive into C programming, Assembly x86/x64, Linux internals, and core networking concepts.</p>
               <dl class="regs"><dt>learned</dt><dd>C programming, Assembly x86/x64</dd><dt>also</dt><dd>Linux internals, core networking concepts</dd></dl>
             </article>
             <article class="stage done" id="s2">
               <p class="cmd">x/s 0x02 &lt;binary_exploitation&gt;</p>
               <h3>Binary Exploitation &amp; Reverse Engineering</h3>
               <p class="st">done</p>
-              <p>Hands-on practice on pwn.college, OST2, and reverse engineering challenges (Binary Bomb, GDB/GEF workflows).</p>
+              <p class="plain">I learned to take programs apart to understand them without their source code, and to find the programming mistakes that attackers abuse to take control of a program.</p>
+              <p class="tech-label">in technical terms</p>
+              <p class="tech">Hands-on practice on pwn.college, OST2, and reverse engineering challenges (Binary Bomb, GDB/GEF workflows).</p>
               <dl class="regs"><dt>where</dt><dd>pwn.college, OpenSecurityTraining2 (OST2)</dd><dt>practice</dt><dd>Binary Bomb, GDB/GEF workflows</dd></dl>
             </article>
             <article class="stage done" id="s3">
               <p class="cmd">x/s 0x03 &lt;htb_academy&gt;</p>
               <h3>Hack The Box Academy Grinding</h3>
               <p class="st">done</p>
-              <p>Completing offensive paths, penetration testing modules, and privilege escalation labs on HTB Academy.</p>
+              <p class="plain">Hack The Box Academy is an online school for ethical hacking. I work through its courses and practice labs, where you attack training machines that were built for that purpose.</p>
+              <p class="tech-label">in technical terms</p>
+              <p class="tech">Completing offensive paths, penetration testing modules, and privilege escalation labs on HTB Academy.</p>
               <dl class="regs"><dt>where</dt><dd>Hack The Box Academy</dd><dt>topics</dt><dd>offensive paths, penetration testing modules, privilege escalation labs</dd></dl>
             </article>
             <article class="stage now" id="s4">
               <p class="cmd">x/s 0x04 &lt;cpts&gt;</p>
               <h3>HTB CPTS Certification</h3>
               <p class="st">in progress</p>
-              <p>Professional penetration testing certification focusing on web, network infrastructure, and Active Directory.</p>
+              <p class="plain">The CPTS is a professional, hands-on exam: you are given a network that looks like a real company's and must find its weaknesses and report them, like a real security audit. I am preparing for it now.</p>
+              <p class="tech-label">in technical terms</p>
+              <p class="tech">Professional penetration testing certification focusing on web, network infrastructure, and Active Directory.</p>
               <dl class="regs"><dt>scope</dt><dd>web, network infrastructure, Active Directory</dd><dt>state</dt><dd>preparing</dd></dl>
             </article>
             <article class="stage todo" id="s5">
               <p class="cmd">x/s 0x05 &lt;advanced_research&gt;</p>
               <h3>Advanced Exploitation &amp; Research</h3>
               <p class="st">planned</p>
-              <p>Deepening knowledge in post-quantum cryptography, advanced kernel exploitation, and automated security tooling.</p>
+              <p class="plain">Next, I want to go deeper: the core of operating systems (the kernel), the cryptography designed to resist future quantum computers, and building my own security tools.</p>
+              <p class="tech-label">in technical terms</p>
+              <p class="tech">Deepening knowledge in post-quantum cryptography, advanced kernel exploitation, and automated security tooling.</p>
               <dl class="regs"><dt>topics</dt><dd>post-quantum cryptography, kernel exploitation, automated security tooling</dd></dl>
             </article>
         </div>

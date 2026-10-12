@@ -220,6 +220,11 @@ main, footer { position: relative; z-index: 1; }
 .whatis { min-height: 3.4em; margin-top: 18px; color: var(--dim); font-size: 13px; }
 .whatis b { font-weight: 400; color: var(--teal); }
 
+.plainlist { display: grid; gap: 4px; max-width: 74ch; margin: 0; }
+.plainlist dt { color: var(--amber); font-weight: 600; }
+.plainlist dt::before { content: "> "; color: var(--dim); }
+.plainlist dd { margin: 0 0 14px; }
+
 /* ---------- journey: step through the stages like a debugger ---------- */
 .progress { margin-bottom: 18px; color: var(--dim); }
 .dbg { display: grid; grid-template-columns: minmax(0, 360px) minmax(0, 1fr); gap: 32px; align-items: start; }
@@ -253,7 +258,10 @@ kbd { padding: 0 5px; border: 1px solid currentColor; font: inherit; font-size: 
 .stage { padding: 22px; border: 1px solid var(--line-hi); background: var(--panel); }
 .stage h3 { margin: 10px 0 2px; font: 700 clamp(19px, 2.6vw, 24px)/1.25 var(--f-display); letter-spacing: -.02em; color: var(--hi); }
 .stage .st { margin-bottom: 12px; text-transform: uppercase; letter-spacing: .1em; }
-.stage .regs { margin-top: 16px; }
+.stage .plain { color: var(--hi); font-size: 16px; }
+.stage .tech-label { margin-top: 18px; color: var(--dim); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; }
+.stage .tech { color: var(--dim); font-size: 14px; }
+.stage .regs { margin-top: 12px; font-size: 14px; }
 .dbg.js .stage:not(.on) { display: none; }
 .dbg.js .stage.on { animation: in .35s cubic-bezier(.2, .8, .2, 1) both; }
 @media (max-width: 800px) { .dbg { grid-template-columns: 1fr; gap: 20px; } }
