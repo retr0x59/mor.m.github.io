@@ -41,10 +41,10 @@
       <div class="dbg" id="dbg">
         <div>
           <ol class="frames" id="frames">
-            <li class="done"><button type="button" aria-controls="s0"><span class="addr">0x00</span><span class="fn">Net admin</span><span class="st">done</span></button></li>
-            <li class="done"><button type="button" aria-controls="s1"><span class="addr">0x01</span><span class="fn">Sysadmin</span><span class="st">done</span></button></li>
-            <li class="done"><button type="button" aria-controls="s2"><span class="addr">0x02</span><span class="fn">Windows foundations</span><span class="st">done</span></button></li>
-            <li class="done"><button type="button" aria-controls="s3"><span class="addr">0x03</span><span class="fn">Linux foundations</span><span class="st">done</span></button></li>
+            <li class="done"><button type="button" aria-controls="s0"><span class="addr">0x00</span><span class="fn">Linux foundations</span><span class="st">done</span></button></li>
+            <li class="done"><button type="button" aria-controls="s1"><span class="addr">0x01</span><span class="fn">Windows foundations</span><span class="st">done</span></button></li>
+            <li class="done"><button type="button" aria-controls="s2"><span class="addr">0x02</span><span class="fn">Net admin</span><span class="st">done</span></button></li>
+            <li class="done"><button type="button" aria-controls="s3"><span class="addr">0x03</span><span class="fn">Sysadmin</span><span class="st">done</span></button></li>
             <li class="done"><button type="button" aria-controls="s4"><span class="addr">0x04</span><span class="fn">Taking programs apart</span><span class="st">done</span></button></li>
             <li class="done"><button type="button" aria-controls="s5"><span class="addr">0x05</span><span class="fn">Hacking school</span><span class="st">done</span></button></li>
             <li class="now"><button type="button" aria-controls="s6"><span class="addr">0x06</span><span class="fn">Certification</span><span class="st">in progress</span></button></li>
@@ -58,25 +58,16 @@
         </div>
         <div class="stages">
             <article class="stage done" id="s0">
-              <p class="cmd">x/s 0x00 &lt;net_admin&gt;</p>
-              <h3>Network Administration</h3>
+              <p class="cmd">x/s 0x00 &lt;linux_foundations&gt;</p>
+              <h3>Linux &amp; Low-Level Foundations</h3>
               <p class="st">done</p>
-              <p class="plain">I was formally trained, and graduated, to build and run the networks an organization depends on: connecting the machines so they can talk to each other, and keeping that working. Together with system administration, this is my strongest ground.</p>
+              <p class="plain">I learned how computers really work under the hood: the Linux operating system, the C language most systems are written in, and assembly, the raw instructions a processor executes.</p>
               <p class="tech-label">in technical terms</p>
-              <p class="tech">Routing and switching at CCNA level, network administration.</p>
-              <dl class="regs"><dt>networks</dt><dd>routers, switches, CCNA-level routing &amp; switching</dd></dl>
+              <p class="tech">Deep dive into C programming, Assembly x86/x64, Linux internals, and core networking concepts.</p>
+              <dl class="regs"><dt>learned</dt><dd>C programming, Assembly x86/x64</dd><dt>also</dt><dd>Linux internals, core networking concepts</dd></dl>
             </article>
             <article class="stage done" id="s1">
-              <p class="cmd">x/s 0x01 &lt;sys_admin&gt;</p>
-              <h3>System Administration</h3>
-              <p class="st">done</p>
-              <p class="plain">I learned to run the servers and services people use every day at work: user accounts, permissions and email.</p>
-              <p class="tech-label">in technical terms</p>
-              <p class="tech">System administration, Active Directory and Exchange.</p>
-              <dl class="regs"><dt>systems</dt><dd>Active Directory, Exchange, system administration</dd></dl>
-            </article>
-            <article class="stage done" id="s2">
-              <p class="cmd">x/s 0x02 &lt;windows_foundations&gt;</p>
+              <p class="cmd">x/s 0x01 &lt;windows_foundations&gt;</p>
               <h3>Windows Foundations</h3>
               <p class="st">done</p>
               <p class="plain">I learned how Windows works, the system most organizations run on their computers and servers.</p>
@@ -84,14 +75,23 @@
               <p class="tech">Windows fundamentals: the base for Active Directory and Windows administration.</p>
               <dl class="regs"><dt>system</dt><dd>Windows</dd></dl>
             </article>
-            <article class="stage done" id="s3">
-              <p class="cmd">x/s 0x03 &lt;linux_foundations&gt;</p>
-              <h3>Linux &amp; Low-Level Foundations</h3>
+            <article class="stage done" id="s2">
+              <p class="cmd">x/s 0x02 &lt;net_admin&gt;</p>
+              <h3>Network Administration</h3>
               <p class="st">done</p>
-              <p class="plain">I learned how computers really work under the hood: the Linux operating system, the C language most systems are written in, and assembly, the raw instructions a processor executes.</p>
+              <p class="plain">I was formally trained, and graduated, to build and run the networks an organization depends on: connecting the machines so they can talk to each other, and keeping that working. Together with system administration, this is my strongest ground.</p>
               <p class="tech-label">in technical terms</p>
-              <p class="tech">Deep dive into C programming, Assembly x86/x64, Linux internals, and core networking concepts.</p>
-              <dl class="regs"><dt>learned</dt><dd>C programming, Assembly x86/x64</dd><dt>also</dt><dd>Linux internals, core networking concepts</dd></dl>
+              <p class="tech">Routing and switching at CCNA level, network administration.</p>
+              <dl class="regs"><dt>networks</dt><dd>routers, switches, CCNA-level routing &amp; switching</dd></dl>
+            </article>
+            <article class="stage done" id="s3">
+              <p class="cmd">x/s 0x03 &lt;sys_admin&gt;</p>
+              <h3>System Administration</h3>
+              <p class="st">done</p>
+              <p class="plain">I learned to run the servers and services people use every day at work: user accounts, permissions and email.</p>
+              <p class="tech-label">in technical terms</p>
+              <p class="tech">System administration, Active Directory and Exchange.</p>
+              <dl class="regs"><dt>systems</dt><dd>Active Directory, Exchange, system administration</dd></dl>
             </article>
             <article class="stage done" id="s4">
               <p class="cmd">x/s 0x04 &lt;binary_exploitation&gt;</p>

@@ -328,10 +328,10 @@
         ].forEach(l => print(l));
       },
       roadmap() {
+        print("[x] Linux & low-level foundations", "g");
+        print("[x] Windows foundations", "g");
         print("[x] Network administration", "g");
         print("[x] System administration", "g");
-        print("[x] Windows foundations", "g");
-        print("[x] Linux & low-level foundations", "g");
         print("[x] Binary exploitation & reverse engineering", "g");
         print("[x] Hack The Box Academy", "g");
         print("[>] HTB CPTS certification", "y");
