@@ -21,6 +21,7 @@
       <a href="about.html" data-k="about">1:about</a>
     </nav>
     <div class="right">
+      <span class="rip" id="rip" aria-hidden="true"></span>
       <span class="clock" id="clock" aria-hidden="true"></span>
       <button id="termBtn" aria-expanded="false" aria-controls="term">&gt;_ shell</button>
     </div>
@@ -90,6 +91,7 @@
           <dt>langs</dt><dd><span>C</span><span>Assembly x86/x64</span><span>Python</span><span>Bash</span></dd>
           <dt>env</dt><dd><span>Kali Linux</span><span>Debian / Pop!_OS</span><span>VS Code</span><span>Obsidian</span></dd>
         </dl>
+        <p class="whatis" id="whatis">$ whatis <b>…</b><br>Hover or tap a tool.</p>
         <p class="hint">No proficiency scores: these are the tools I regularly use in labs, challenges, and development.</p>
       </section>
     </div>
@@ -104,7 +106,7 @@
     <div class="grip" id="termGrip" title="Drag to resize"></div>
     <div class="head">shell <button id="termClose" aria-label="Close shell">[x]</button></div>
     <div class="output" id="termOut" aria-live="polite"></div>
-    <div class="input"><label for="termIn">$</label><input id="termIn" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="help"></div>
+    <div class="input"><label for="termIn" id="termPs">$</label><input id="termIn" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="help"></div>
   </div>
 
   <script src="assets/js/main.js"></script>

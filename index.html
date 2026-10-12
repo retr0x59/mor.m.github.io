@@ -21,8 +21,9 @@
       <a href="about.html" data-k="about">1:about</a>
     </nav>
     <div class="right">
+      <span class="rip" id="rip" aria-hidden="true"></span>
       <span class="clock" id="clock" aria-hidden="true"></span>
-      <button id="termBtn" aria-expanded="false" aria-controls="term">&gt;_ shell</button>
+      <button id="termBtn">&gt;_ shell</button>
     </div>
   </header>
 
@@ -43,6 +44,15 @@
       </div>
     </section>
 
+    <section class="panel wrap" id="shell">
+      <h2 class="ctx">shell</h2>
+      <div class="term inline" id="term">
+        <div class="output" id="termOut" aria-live="polite"></div>
+        <div class="input"><label for="termIn" id="termPs">$</label><input id="termIn" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="help"></div>
+      </div>
+      <p class="hint">This shell is live, and there is a flag hidden on this site. Start with <span class="out">ls -a</span>.</p>
+    </section>
+
     <section class="panel wrap">
       <h2 class="ctx">registers</h2>
       <dl class="regs">
@@ -57,7 +67,7 @@
     <section class="panel wrap">
       <h2 class="ctx">memory</h2>
       <pre class="hex" id="hex">retr0x59 :: learning offensive security. pentesting, reverse engineering, binary exploitation. C / python / x86-64 asm. target: HTB CPTS.</pre>
-      <p class="hint">Hover a byte to find its character, or press <span class="out">`</span> to open the shell.</p>
+      <p class="hint">This memory is writable: click a byte and type to patch it, on the hex or the ASCII side. <button class="link" id="hexReset" type="button">reset</button></p>
     </section>
   </main>
 
@@ -65,13 +75,6 @@
     <span>-- EOF --</span>
     <span>© 2026 retr0x59 · <a href="https://github.com/retr0x59" target="_blank" rel="noopener">github</a></span>
   </footer>
-
-  <div class="term" id="term" hidden>
-    <div class="grip" id="termGrip" title="Drag to resize"></div>
-    <div class="head">shell <button id="termClose" aria-label="Close shell">[x]</button></div>
-    <div class="output" id="termOut" aria-live="polite"></div>
-    <div class="input"><label for="termIn">$</label><input id="termIn" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="help"></div>
-  </div>
 
   <script src="assets/js/main.js"></script>
 </body>

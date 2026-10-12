@@ -4,10 +4,27 @@
 
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
-  const store = {
-    get(k, d) { try { const v = sessionStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
-    set(k, v) { try { sessionStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+  const storage = area => ({
+    get(k, d) { try { const v = area().getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
+    set(k, v) { try { area().setItem(k, JSON.stringify(v)); } catch (e) {} }
+  });
+  const store = storage(() => sessionStorage);   // per tab
+  const disk = storage(() => localStorage);      // survives visits
+  const root = document.documentElement;
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const fine = matchMedia("(pointer: fine)").matches;
+  const NAME = "retr0x59";
+
+  const hex = n => n.toString(16).padStart(2, "0");
+  const ascii = n => (n >= 32 && n < 127 ? String.fromCharCode(n) : ".");
+
+  /* ---------- accent theme (unlocked from the shell) ---------- */
+  const THEMES = ["amber", "green", "red", "ice"];
+  const setTheme = t => {
+    if (t === "amber") delete root.dataset.theme; else root.dataset.theme = t;
+    disk.set("rx-theme", t);
   };
+  if (THEMES.includes(disk.get("rx-theme", "amber"))) setTheme(disk.get("rx-theme", "amber"));
 
   /* ---------- status bar ---------- */
   const wins = $("#wins");
@@ -21,19 +38,61 @@
     setInterval(tick, 20000);
   }
 
-  /* ---------- name <-> bytes ---------- */
+  // instruction pointer: follows the scroll position
+  const rip = $("#rip");
+  if (rip) {
+    const step = () => { rip.textContent = "rip 0x" + (0x401000 + Math.round(scrollY)).toString(16); };
+    step();
+    addEventListener("scroll", step, { passive: true });
+  }
+
+  /* ---------- pointer glow + scroll reveal ---------- */
+  if (fine && !reduce) {
+    let queued = false;
+    addEventListener("pointermove", e => {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(() => {
+        root.style.setProperty("--mx", e.clientX + "px");
+        root.style.setProperty("--my", e.clientY + "px");
+        queued = false;
+      });
+    });
+  }
+  if ("IntersectionObserver" in window && !reduce) {
+    const io = new IntersectionObserver(es => es.forEach(e => {
+      if (!e.isIntersecting) return;
+      e.target.classList.remove("pre");
+      io.unobserve(e.target);
+    }), { rootMargin: "0px 0px -6% 0px" });
+    $$(".panel").forEach(el => { el.classList.add("rv", "pre"); io.observe(el); });
+  }
+
+  /* ---------- name: decodes on load, letters map to their bytes ---------- */
   const letters = $$(".ident h1 span"), bytes = $$(".ident .bytes span");
+  const scramble = (el, final, ms) => {
+    if (reduce) { el.textContent = final; return; }
+    const end = performance.now() + ms;
+    (function spin() {
+      if (performance.now() >= end) { el.textContent = final; return; }
+      el.textContent = "0123456789abcdef"[Math.random() * 16 | 0];
+      setTimeout(spin, 45);
+    })();
+  };
   letters.forEach((el, i) => {
-    [el, bytes[i]].forEach(n => {
-      if (!n) return;
-      n.addEventListener("pointerenter", () => { el.classList.add("hot"); bytes[i].classList.add("hot"); });
-      n.addEventListener("pointerleave", () => { el.classList.remove("hot"); bytes[i].classList.remove("hot"); });
+    const by = bytes[i];
+    if (!by) return;
+    const ch = el.textContent, code = by.textContent, delay = 350 + i * 110;
+    scramble(el, ch, delay);
+    if (!reduce) { by.textContent = "??"; setTimeout(() => { by.textContent = code; }, delay); }
+    el.addEventListener("pointerenter", () => scramble(el, ch, 220));
+    [el, by].forEach(n => {
+      n.addEventListener("pointerenter", () => { el.classList.add("hot"); by.classList.add("hot"); });
+      n.addEventListener("pointerleave", () => { el.classList.remove("hot"); by.classList.remove("hot"); });
     });
   });
 
   /* ---------- hexdump ---------- */
-  const hex = n => n.toString(16).padStart(2, "0");
-  const ascii = n => (n >= 32 && n < 127 ? String.fromCharCode(n) : ".");
   // plain-text xxd rows, used by the shell
   function xxd(text, cols = 16) {
     const data = new TextEncoder().encode(text), rows = [];
@@ -44,11 +103,20 @@
     return rows;
   }
 
+  // the memory panel is a small hex editor: click a cell, then type
   const dump = $("#hex");
   if (dump) {
-    const data = new TextEncoder().encode(dump.textContent.trim());
+    const orig = new TextEncoder().encode(dump.textContent.trim());
+    let data = orig.slice(), cols = 0, sel = -1, side = "b", nib = 0;
+    const cell = (tag, i) => $(`${tag}[data-i="${i}"]`, dump);
     const span = (tag, i, txt) => { const s = document.createElement(tag); s.dataset.i = i; s.textContent = txt; return s; };
-    let cols = 0;
+
+    const paint = () => {
+      $$(".sel, .pair", dump).forEach(n => n.classList.remove("sel", "pair"));
+      if (sel < 0) return;
+      cell(side, sel).classList.add("sel");
+      cell(side === "b" ? "i" : "b", sel).classList.add("pair");
+    };
     const render = () => {
       const want = innerWidth < 700 ? 8 : 16;
       if (want === cols) return;
@@ -65,7 +133,44 @@
         row.forEach((b, j) => dump.append(span("i", o + j, ascii(b))));
         dump.append("|\n");
       }
+      paint();
     };
+    const select = (i, s) => {
+      sel = Math.max(0, Math.min(data.length - 1, i));
+      if (s) side = s;
+      nib = 0;
+      paint();
+    };
+    const write = (i, v) => {
+      data[i] = v;
+      cell("b", i).textContent = hex(v);
+      cell("i", i).textContent = ascii(v);
+    };
+
+    dump.tabIndex = 0;
+    dump.addEventListener("click", e => {
+      const i = e.target.dataset && e.target.dataset.i;
+      if (i !== undefined) select(+i, e.target.tagName === "B" ? "b" : "i");
+    });
+    dump.addEventListener("keydown", e => {
+      if (sel < 0 || e.ctrlKey || e.metaKey || e.altKey) return;
+      const k = e.key;
+      if (k === "ArrowRight") select(sel + 1);
+      else if (k === "ArrowLeft") select(sel - 1);
+      else if (k === "ArrowDown") select(sel + cols);
+      else if (k === "ArrowUp") select(sel - cols);
+      else if (k === "Escape") { sel = -1; paint(); }
+      else if (side === "b" && /^[0-9a-f]$/i.test(k)) {
+        const d = parseInt(k, 16);
+        if (!nib) { write(sel, (d << 4) | (data[sel] & 15)); nib = 1; }
+        else { write(sel, (data[sel] & 240) | d); select(sel + 1); }
+      }
+      else if (side === "i" && k.length === 1 && k.charCodeAt(0) < 127) { write(sel, k.charCodeAt(0)); select(sel + 1); }
+      else return;
+      e.preventDefault();
+      e.stopPropagation();
+    });
+
     const light = e => {
       $$(".hot", dump).forEach(n => n.classList.remove("hot"));
       const i = e.target.dataset && e.target.dataset.i;
@@ -73,14 +178,66 @@
     };
     dump.addEventListener("pointerover", light);
     dump.addEventListener("pointerleave", light);
+
+    const reset = $("#hexReset");
+    if (reset) reset.addEventListener("click", () => { data = orig.slice(); sel = -1; cols = 0; render(); });
     addEventListener("resize", render);
     render();
   }
 
+  /* ---------- whatis: one-line description of each tool (about) ---------- */
+  const whatis = $("#whatis");
+  if (whatis) {
+    const MAN = {
+      "nmap": "network exploration tool and port scanner",
+      "ffuf": "fast web fuzzer for directories, vhosts and parameters",
+      "dig": "DNS lookup utility",
+      "smbclient": "ftp-like client to access SMB/CIFS shares",
+      "wireshark": "network protocol analyzer",
+      "burp suite": "intercepting proxy for web application testing",
+      "sqlmap": "automatic SQL injection detection and exploitation tool",
+      "curl": "transfer data from or to a server",
+      "owasp zap": "open-source web application scanner and proxy",
+      "gdb": "the GNU debugger",
+      "pwndbg": "GDB plugin for exploit development and reversing",
+      "gef": "GDB Enhanced Features for exploit developers and reversers",
+      "pwntools": "CTF framework and exploit development library for Python",
+      "ghidra": "software reverse engineering suite with a decompiler",
+      "ida": "interactive disassembler and decompiler",
+      "gtfobins": "list of Unix binaries that can bypass local restrictions",
+      "metasploit": "penetration testing framework",
+      "impacket": "Python classes for network protocols (SMB, Kerberos, ...)",
+      "hydra": "parallelized network login cracker",
+      "john": "John the Ripper password cracker",
+      "c": "systems programming language",
+      "assembly x86/x64": "what the CPU actually runs",
+      "python": "scripting and exploit automation",
+      "bash": "GNU Bourne-Again SHell",
+      "kali linux": "Debian-based distribution for penetration testing",
+      "debian / pop!_os": "daily-driver Linux",
+      "vs code": "code editor",
+      "obsidian": "markdown notes and knowledge base"
+    };
+    $$(".ls dd span").forEach(el => {
+      const name = el.textContent.trim(), desc = MAN[name.toLowerCase()];
+      if (!desc) return;
+      el.tabIndex = 0;
+      const show = () => {
+        $$(".ls dd span.on").forEach(n => n.classList.remove("on"));
+        el.classList.add("on");
+        whatis.textContent = "$ whatis ";
+        const b = document.createElement("b");
+        b.textContent = name;
+        whatis.append(b, document.createElement("br"), name + " - " + desc);
+      };
+      ["pointerenter", "focus", "click"].forEach(ev => el.addEventListener(ev, show));
+    });
+  }
+
   /* ---------- shell ---------- */
-  const term = $("#term"), out = $("#termOut"), input = $("#termIn"), termBtn = $("#termBtn");
+  const term = $("#term"), out = $("#termOut"), input = $("#termIn"), termBtn = $("#termBtn"), ps = $("#termPs");
   if (term && out && input) {
-    const root = document.documentElement;
+    const inline = term.classList.contains("inline");
     const print = (txt, cls) => {
       const d = document.createElement("div");
       if (cls) d.className = cls;
@@ -93,10 +250,28 @@
     const hist = [];
     let hi = 0;
 
+    let isRoot = disk.get("rx-root", 0) === 1;
+    const prompt = () => (isRoot ? "#" : "$");
+    const syncPrompt = () => { if (ps) ps.textContent = prompt(); };
+    syncPrompt();
+
+    // the crackme: the key is the name as memory stores it, the flag is xored with 0x59
+    const KEY = [...new TextEncoder().encode(NAME)].map(hex).join("");
+    const FLAG = [63, 53, 56, 62, 34, 55, 105, 45, 6, 42, 45, 43, 104, 41, 41, 106, 61, 36];
+    const FILES = {
+      "about.md": () => { CMDS.whoami(); print("more: open about", "y"); },
+      "roadmap.txt": () => CMDS.roadmap(),
+      "crackme": () => print("cat: crackme: binary file (try: strings crackme)", "r"),
+      ".hint": () => print("the key is my name, the way memory stores it: 8 bytes, hex, no spaces.", "t")
+    };
+
     const CMDS = {
-      help() { print("help  whoami  file  skills  roadmap  ls  open <page>  xxd <text>  github  date  clear  exit", "y"); },
-      whoami() { print("retr0x59 · learning offensive security: pentesting, low-level development, reverse engineering"); },
-      file() { print("retr0x59: ELF 64-bit LSB executable, x86-64, dynamically linked, not stripped", "t"); },
+      help() {
+        print("help  whoami  file  skills  roadmap  ls [-a]  cat <file>  strings <file>", "y");
+        print("open <page>  xxd <text>  theme  github  date  clear" + (inline ? "" : "  exit"), "y");
+      },
+      whoami() { print(isRoot ? "root (you earned it)" : NAME + " · learning offensive security: pentesting, low-level development, reverse engineering"); },
+      file() { print(NAME + ": ELF 64-bit LSB executable, x86-64, dynamically linked, not stripped", "t"); },
       skills() {
         [
           "recon      Nmap, ffuf, dig, smbclient, Wireshark",
@@ -112,11 +287,44 @@
         print("[>] HTB CPTS certification", "y");
         print("[ ] Advanced exploitation & research");
       },
-      ls() { print(pages().join("  ")); },
+      ls(args) {
+        const all = args.some(a => /^-\w*a/.test(a));
+        print((all ? ".hint  " : "") + "about.md  roadmap.txt  crackme*");
+      },
+      cat(args) {
+        if (!args[0]) return print("usage: cat <file>", "y");
+        const f = args[0].replace(/^\.\//, "");
+        if (!Object.prototype.hasOwnProperty.call(FILES, f)) return print("cat: " + args[0] + ": no such file", "r");
+        FILES[f]();
+      },
+      strings(args) {
+        if ((args[0] || "").replace(/^\.\//, "") !== "crackme") return print("usage: strings crackme", "y");
+        ["/lib64/ld-linux-x86-64.so.2", "usage: ./crackme <key>", "wrong key", "access granted", "have you tried ls -a ?"].forEach(l => print(l));
+      },
+      "./crackme"(args) {
+        const k = (args[0] || "").toLowerCase();
+        if (!k) return print("usage: ./crackme <key>", "y");
+        if (k === NAME) return print("close: that is how you read it, not how memory stores it.", "y");
+        if (k !== KEY) return print("wrong key", "r");
+        print("access granted", "g");
+        print(FLAG.map(c => String.fromCharCode(c ^ 0x59)).join(""), "t");
+        print("you are root now. new command unlocked: theme", "g");
+        isRoot = true;
+        disk.set("rx-root", 1);
+        syncPrompt();
+      },
+      crackme() { print("crackme: command not found (did you mean ./crackme ?)", "r"); },
+      sudo() { print("visitor is not in the sudoers file. find the flag instead.", "r"); },
+      theme(args) {
+        if (!isRoot) return print("theme: permission denied (are you root? try ./crackme)", "r");
+        if (!THEMES.includes(args[0])) return print("usage: theme <" + THEMES.join("|") + ">", "y");
+        setTheme(args[0]);
+        print("theme = " + args[0], "g");
+      },
       open(args) {
         const p = args[0];
-        if (!p) return print("usage: open <page>", "y");
-        const f = pages().find(h => h === p || h === p + ".html");
+        if (!p) return print("usage: open <page>   pages: " + pages().join("  "), "y");
+        const f = pages().find(h => h === p || h === p + ".html" || (p === "home" && h === "index.html"));
         if (!f) return print("no such page: " + p, "r");
         location.href = f;
       },
@@ -127,12 +335,12 @@
       github() { print("https://github.com/retr0x59", "t"); },
       date() { print(new Date().toString()); },
       clear() { out.textContent = ""; },
-      exit() { close(); }
+      exit() { if (inline) print("this shell stays open.", "y"); else close(); }
     };
     CMDS.cd = CMDS.open;
 
     const run = line => {
-      print("$ " + line, "c");
+      print(prompt() + " " + line, "c");
       const [cmd, ...args] = line.trim().split(/\s+/);
       if (!cmd) return;
       hist.push(line);
@@ -142,25 +350,56 @@
     };
 
     function open(focus) {
+      if (inline) {
+        term.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" });
+        input.focus({ preventScroll: true });
+        return;
+      }
       term.hidden = false;
       document.body.classList.add("term-open");
       if (termBtn) termBtn.setAttribute("aria-expanded", "true");
       store.set("rx-term", 1);
-      if (!out.childElementCount) print("Type 'help' to list commands.", "g");
       if (focus) input.focus();
     }
     function close() {
+      if (inline) return;
       term.hidden = true;
       document.body.classList.remove("term-open");
       if (termBtn) termBtn.setAttribute("aria-expanded", "false");
       store.set("rx-term", 0);
     }
-    const toggle = () => (term.hidden ? open(true) : close());
+    const toggle = () => (inline || term.hidden ? open(true) : close());
 
-    setH(store.get("rx-th", 320));
+    print("Type 'help' to list commands. A flag is hidden here: start with ls -a", "g");
     if (termBtn) termBtn.addEventListener("click", toggle);
     const x = $("#termClose");
     if (x) x.addEventListener("click", close);
+
+    // home: the shell types a short demo the first time it scrolls into view
+    let demo = null;
+    const stopDemo = () => { if (demo) { clearTimeout(demo); demo = null; input.value = ""; } };
+    const playDemo = cmds => {
+      const next = () => {
+        const line = cmds.shift();
+        if (line === undefined) { demo = null; return; }
+        let i = 0;
+        (function key() {
+          if (i < line.length) { input.value = line.slice(0, ++i); demo = setTimeout(key, 70); }
+          else demo = setTimeout(() => { input.value = ""; run(line); demo = setTimeout(next, 500); }, 350);
+        })();
+      };
+      demo = setTimeout(next, 500);
+    };
+    if (inline && !reduce && !store.get("rx-demo", 0) && "IntersectionObserver" in window) {
+      const seen = new IntersectionObserver(es => {
+        if (!es[0].isIntersecting) return;
+        seen.disconnect();
+        store.set("rx-demo", 1);
+        playDemo(["whoami", "file"]);
+      }, { threshold: .5 });
+      seen.observe(term);
+      ["pointerdown", "keydown"].forEach(ev => term.addEventListener(ev, stopDemo, true));
+    }
 
     input.addEventListener("keydown", e => {
       if (e.key === "Enter") { run(input.value); input.value = ""; }
@@ -168,24 +407,26 @@
       else if (e.key === "ArrowDown") { hi = Math.min(hi + 1, hist.length); input.value = hist[hi] || ""; }
       else if (e.key === "Escape") close();
     });
-    out.addEventListener("click", () => { if (!String(getSelection())) input.focus(); });
-    // backtick toggles the shell from anywhere on the page
+    term.addEventListener("click", () => { if (!String(getSelection())) input.focus({ preventScroll: true }); });
+    // backtick jumps to the shell from anywhere on the page
     addEventListener("keydown", e => {
       if (e.key !== "`" || e.ctrlKey || e.metaKey || e.altKey) return;
       e.preventDefault();
       toggle();
     });
 
-    const grip = $("#termGrip");
-    if (grip) grip.addEventListener("pointerdown", e => {
-      e.preventDefault();
-      grip.setPointerCapture(e.pointerId);
-      const move = ev => store.set("rx-th", setH(innerHeight - ev.clientY));
-      const up = () => { grip.removeEventListener("pointermove", move); grip.removeEventListener("pointerup", up); };
-      grip.addEventListener("pointermove", move);
-      grip.addEventListener("pointerup", up);
-    });
-
-    if (store.get("rx-term", 0)) open(false);
+    if (!inline) {
+      setH(store.get("rx-th", 320));
+      const grip = $("#termGrip");
+      if (grip) grip.addEventListener("pointerdown", e => {
+        e.preventDefault();
+        grip.setPointerCapture(e.pointerId);
+        const move = ev => store.set("rx-th", setH(innerHeight - ev.clientY));
+        const up = () => { grip.removeEventListener("pointermove", move); grip.removeEventListener("pointerup", up); };
+        grip.addEventListener("pointermove", move);
+        grip.addEventListener("pointerup", up);
+      });
+      if (store.get("rx-term", 0)) open(false);
+    }
   }
 })();
