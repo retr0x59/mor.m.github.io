@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>journey · retr0x59</title>
+  <meta name="description" content="The learning path of retr0x59, step by step: from Linux and low-level foundations toward the HTB CPTS.">
+  <meta name="theme-color" content="#0b0a08">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230b0a08'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='monospace' font-size='15' font-weight='700' fill='%23ffb000'%3E0x%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Mono:wght@700&display=swap">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="journey">
+
+  <header class="bar">
+    <a class="sess" href="index.html">[retr0x59]</a>
+    <nav class="wins" id="wins" aria-label="Main navigation">
+      <a href="index.html" data-k="home">0:home</a>
+      <a href="about.html" data-k="about">1:about</a>
+      <a href="journey.html" data-k="journey">2:journey</a>
+    </nav>
+    <div class="right">
+      <span class="rip" id="rip" aria-hidden="true"></span>
+      <span class="clock" id="clock" aria-hidden="true"></span>
+      <button id="termBtn" aria-expanded="false" aria-controls="term">&gt;_ shell</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero wrap">
+      <p class="cmd in">gdb -q ./journey</p>
+      <h1 class="in" style="--i:1">My path, one step at a time</h1>
+      <p class="lead in" style="--i:2">I am still learning. This is where I started, where I am now, and what comes next. Step through it like a debugger.</p>
+    </section>
+
+    <section class="panel wrap">
+      <h2 class="ctx">disas journey</h2>
+      <p class="progress" id="progress">[======····] 3/5 steps done</p>
+      <div class="dbg" id="dbg">
+        <div>
+          <ol class="frames" id="frames">
+            <li class="done"><button type="button" aria-controls="s1"><span class="addr">0x01</span><span class="fn">linux_foundations</span><span class="st">done</span></button></li>
+            <li class="done"><button type="button" aria-controls="s2"><span class="addr">0x02</span><span class="fn">binary_exploitation</span><span class="st">done</span></button></li>
+            <li class="done"><button type="button" aria-controls="s3"><span class="addr">0x03</span><span class="fn">htb_academy</span><span class="st">done</span></button></li>
+            <li class="now"><button type="button" aria-controls="s4"><span class="addr">0x04</span><span class="fn">cpts</span><span class="st">in progress</span></button></li>
+            <li class="todo"><button type="button" aria-controls="s5"><span class="addr">0x05</span><span class="fn">advanced_research</span><span class="st">planned</span></button></li>
+          </ol>
+          <div class="ctl" id="ctl" hidden>
+            <button class="btn" type="button" data-go="prev">← prev <kbd>p</kbd></button>
+            <button class="btn" type="button" data-go="next">next <kbd>n</kbd> →</button>
+            <button class="btn solid" type="button" data-go="rip">continue <kbd>c</kbd></button>
+          </div>
+        </div>
+        <div class="stages">
+            <article class="stage done" id="s1">
+              <p class="cmd">x/s 0x01 &lt;linux_foundations&gt;</p>
+              <h3>Linux &amp; Low-Level Foundations</h3>
+              <p class="st">done</p>
+              <p>Deep dive into C programming, Assembly x86/x64, Linux internals, and core networking concepts.</p>
+              <dl class="regs"><dt>learned</dt><dd>C programming, Assembly x86/x64</dd><dt>also</dt><dd>Linux internals, core networking concepts</dd></dl>
+            </article>
+            <article class="stage done" id="s2">
+              <p class="cmd">x/s 0x02 &lt;binary_exploitation&gt;</p>
+              <h3>Binary Exploitation &amp; Reverse Engineering</h3>
+              <p class="st">done</p>
+              <p>Hands-on practice on pwn.college, OST2, and reverse engineering challenges (Binary Bomb, GDB/GEF workflows).</p>
+              <dl class="regs"><dt>where</dt><dd>pwn.college, OpenSecurityTraining2 (OST2)</dd><dt>practice</dt><dd>Binary Bomb, GDB/GEF workflows</dd></dl>
+            </article>
+            <article class="stage done" id="s3">
+              <p class="cmd">x/s 0x03 &lt;htb_academy&gt;</p>
+              <h3>Hack The Box Academy Grinding</h3>
+              <p class="st">done</p>
+              <p>Completing offensive paths, penetration testing modules, and privilege escalation labs on HTB Academy.</p>
+              <dl class="regs"><dt>where</dt><dd>Hack The Box Academy</dd><dt>topics</dt><dd>offensive paths, penetration testing modules, privilege escalation labs</dd></dl>
+            </article>
+            <article class="stage now" id="s4">
+              <p class="cmd">x/s 0x04 &lt;cpts&gt;</p>
+              <h3>HTB CPTS Certification</h3>
+              <p class="st">in progress</p>
+              <p>Professional penetration testing certification focusing on web, network infrastructure, and Active Directory.</p>
+              <dl class="regs"><dt>scope</dt><dd>web, network infrastructure, Active Directory</dd><dt>state</dt><dd>preparing</dd></dl>
+            </article>
+            <article class="stage todo" id="s5">
+              <p class="cmd">x/s 0x05 &lt;advanced_research&gt;</p>
+              <h3>Advanced Exploitation &amp; Research</h3>
+              <p class="st">planned</p>
+              <p>Deepening knowledge in post-quantum cryptography, advanced kernel exploitation, and automated security tooling.</p>
+              <dl class="regs"><dt>topics</dt><dd>post-quantum cryptography, kernel exploitation, automated security tooling</dd></dl>
+            </article>
+        </div>
+      </div>
+      <p class="hint">Dates and writeups will be added as I go.</p>
+    </section>
+  </main>
+
+  <footer class="eof">
+    <span>-- EOF --</span>
+    <span>© 2026 retr0x59 · <a href="https://github.com/retr0x59" target="_blank" rel="noopener">github</a></span>
+  </footer>
+
+  <div class="term" id="term" hidden>
+    <div class="grip" id="termGrip" title="Drag to resize"></div>
+    <div class="head">shell <button id="termClose" aria-label="Close shell">[x]</button></div>
+    <div class="output" id="termOut" aria-live="polite"></div>
+    <div class="input"><label for="termIn" id="termPs">$</label><input id="termIn" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="help"></div>
+  </div>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

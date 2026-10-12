@@ -234,6 +234,45 @@
     });
   }
 
+  /* ---------- journey: step through the stages ---------- */
+  const dbg = $("#dbg");
+  if (dbg) {
+    const frames = $$("#frames li"), stages = $$(".stage", dbg);
+    const ripAt = Math.max(0, frames.findIndex(li => li.classList.contains("now")));
+    let at = -1;
+    const go = i => {
+      at = Math.max(0, Math.min(frames.length - 1, i));
+      frames.forEach((li, j) => {
+        li.classList.toggle("on", j === at);
+        $("button", li).setAttribute("aria-current", j === at ? "step" : "false");
+      });
+      stages.forEach((st, j) => st.classList.toggle("on", j === at));
+    };
+    const GO = { prev: () => go(at - 1), next: () => go(at + 1), rip: () => go(ripAt) };
+    dbg.classList.add("js");
+    frames.forEach((li, i) => $("button", li).addEventListener("click", () => go(i)));
+    const ctl = $("#ctl");
+    if (ctl) {
+      ctl.hidden = false;
+      ctl.addEventListener("click", e => { const b = e.target.closest("[data-go]"); if (b) GO[b.dataset.go](); });
+    }
+    addEventListener("keydown", e => {
+      if (e.ctrlKey || e.metaKey || e.altKey || /^(INPUT|TEXTAREA)$/.test(e.target.tagName)) return;
+      const k = { p: "prev", n: "next", c: "rip", ArrowUp: "prev", ArrowDown: "next" }[e.key];
+      if (!k || (e.key.startsWith("Arrow") && !e.target.closest("#frames"))) return;
+      e.preventDefault();
+      GO[k]();
+      if (e.key.startsWith("Arrow")) $("button", frames[at]).focus();
+    });
+    const done = frames.filter(li => li.classList.contains("done")).length;
+    const bar = $("#progress");
+    if (bar) {
+      const w = Math.round(done / frames.length * 10);
+      bar.textContent = "[" + "=".repeat(w) + "·".repeat(10 - w) + "] " + done + "/" + frames.length + " steps done";
+    }
+    go(ripAt);
+  }
+
   /* ---------- shell ---------- */
   const term = $("#term"), out = $("#termOut"), input = $("#termIn"), termBtn = $("#termBtn"), ps = $("#termPs");
   if (term && out && input) {
@@ -260,7 +299,7 @@
     const FLAG = [63, 53, 56, 62, 34, 55, 105, 45, 6, 42, 45, 43, 104, 41, 41, 106, 61, 36];
     const FILES = {
       "about.md": () => { CMDS.whoami(); print("more: open about", "y"); },
-      "roadmap.txt": () => CMDS.roadmap(),
+      "roadmap.txt": () => { CMDS.roadmap(); print("more: open journey", "y"); },
       "crackme": () => print("cat: crackme: binary file (try: strings crackme)", "r"),
       ".hint": () => print("the key is my name, the way memory stores it: 8 bytes, hex, no spaces.", "t")
     };
