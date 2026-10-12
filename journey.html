@@ -37,10 +37,11 @@
 
     <section class="panel wrap">
       <h2 class="ctx">disas journey</h2>
-      <p class="progress" id="progress">[======····] 3/5 steps done</p>
+      <p class="progress" id="progress">[=======···] 4/6 steps done</p>
       <div class="dbg" id="dbg">
         <div>
           <ol class="frames" id="frames">
+            <li class="done"><button type="button" aria-controls="s0"><span class="addr">0x00</span><span class="fn">net_sysadmin</span><span class="st">done</span></button></li>
             <li class="done"><button type="button" aria-controls="s1"><span class="addr">0x01</span><span class="fn">linux_foundations</span><span class="st">done</span></button></li>
             <li class="done"><button type="button" aria-controls="s2"><span class="addr">0x02</span><span class="fn">binary_exploitation</span><span class="st">done</span></button></li>
             <li class="done"><button type="button" aria-controls="s3"><span class="addr">0x03</span><span class="fn">htb_academy</span><span class="st">done</span></button></li>
@@ -54,6 +55,13 @@
           </div>
         </div>
         <div class="stages">
+            <article class="stage done" id="s0">
+              <p class="cmd">x/s 0x00 &lt;net_sysadmin&gt;</p>
+              <h3>Network &amp; System Administration</h3>
+              <p class="st">done</p>
+              <p>Formal training, graduated: routing and switching at CCNA level, network administration, system administration, Active Directory and Exchange. This is my strongest ground and where everything else started.</p>
+              <dl class="regs"><dt>networks</dt><dd>routers, switches, CCNA-level routing &amp; switching</dd><dt>systems</dt><dd>Active Directory, Exchange, system administration</dd></dl>
+            </article>
             <article class="stage done" id="s1">
               <p class="cmd">x/s 0x01 &lt;linux_foundations&gt;</p>
               <h3>Linux &amp; Low-Level Foundations</h3>

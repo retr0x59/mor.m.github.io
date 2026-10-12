@@ -262,6 +262,17 @@ kbd { padding: 0 5px; border: 1px solid currentColor; font: inherit; font-size: 
 .rv { transition: opacity .6s, transform .6s cubic-bezier(.2, .8, .2, 1); }
 .rv.pre { opacity: 0; transform: translateY(14px); }
 
+/* ---------- home: what I know / what I am learning ---------- */
+.tracks { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.track { min-width: 0; padding: 22px; border: 1px solid var(--line-hi); background: var(--panel); }
+.track.solid { border-color: var(--green); }
+.track .tag { color: var(--amber); font-size: 13px; }
+.track.solid .tag { color: var(--green); }
+.track h3 { margin: 8px 0 8px; font: 700 clamp(19px, 2.4vw, 23px)/1.25 var(--f-display); letter-spacing: -.02em; color: var(--hi); }
+.stack { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
+.stack span { padding: 2px 8px; border: 1px solid var(--line-hi); color: var(--text); font-size: 13px; }
+@media (max-width: 760px) { .tracks { grid-template-columns: 1fr; } }
+
 /* ---------- footer ---------- */
 .eof {
   display: flex;

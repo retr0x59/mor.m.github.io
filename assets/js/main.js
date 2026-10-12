@@ -189,6 +189,12 @@
   const whatis = $("#whatis");
   if (whatis) {
     const MAN = {
+      "routing": "moving traffic between networks (routers)",
+      "switching": "connecting the machines inside a network (switches, VLANs)",
+      "network administration": "running, monitoring and troubleshooting a network day to day",
+      "active directory": "Microsoft directory service: the users, machines and permissions of an organization",
+      "exchange": "Microsoft mail and calendar server",
+      "system administration": "installing, running and maintaining servers",
       "nmap": "network exploration tool and port scanner",
       "ffuf": "fast web fuzzer for directories, vhosts and parameters",
       "dig": "DNS lookup utility",
@@ -313,6 +319,8 @@
       file() { print(NAME + ": ELF 64-bit LSB executable, x86-64, dynamically linked, not stripped", "t"); },
       skills() {
         [
+          "network    routing & switching (CCNA-level), network administration",
+          "sysadmin   Active Directory, Exchange, system administration",
           "recon      Nmap, ffuf, dig, smbclient, Wireshark",
           "web        Burp Suite, sqlmap, curl, OWASP ZAP",
           "reversing  GDB, pwndbg, GEF, Pwntools, Ghidra, IDA",
