@@ -1,126 +1,134 @@
 <!DOCTYPE html>
-<html lang="es" class="bg-slate-950 text-slate-100 font-mono">
+<html lang="fr" class="bg-slate-950 text-slate-100 font-mono">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>cdelunasec.sec - Portfolio</title>
+  <title>retr0.sec // Cybersecurity & Pentesting</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @keyframes pulse-slow {
+      0%, 100% { opacity: 0.2; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(1.05); }
+    }
+    .radar-pulse {
+      animation: pulse-slow 4s infinite ease-in-out;
+    }
+  </style>
 </head>
-<body class="min-h-screen flex flex-col items-center p-4 relative overflow-x-hidden">
+<body class="min-h-screen flex flex-col items-center p-4 relative overflow-x-hidden selection:bg-blue-500 selection:text-white">
 
-  <!-- Arrière-plan Radar -->
-  <div class="absolute top-20 flex items-center justify-center pointer-events-none opacity-20 z-0">
-    <div class="w-[400px] h-[400px] border border-blue-500/50 rounded-full absolute"></div>
-    <div class="w-[250px] h-[250px] border border-blue-500/50 rounded-full absolute"></div>
-    <div class="w-[100px] h-[100px] border border-blue-500/50 rounded-full absolute"></div>
+  <!-- Arrière-plan Radar / Effet Cyber -->
+  <div class="absolute top-16 flex items-center justify-center pointer-events-none opacity-30 z-0 radar-pulse">
+    <div class="w-[450px] h-[450px] border border-blue-500/30 rounded-full absolute"></div>
+    <div class="w-[300px] h-[300px] border border-blue-500/40 rounded-full absolute"></div>
+    <div class="w-[150px] h-[150px] border border-blue-500/50 rounded-full absolute"></div>
+    <div class="w-[2px] h-[450px] bg-gradient-to-b from-transparent via-blue-500/20 to-transparent absolute"></div>
   </div>
 
   <!-- Header -->
-  <header class="w-full max-w-xl flex justify-between items-center z-10 py-4 border-b border-slate-800">
-    <h1 class="text-lg font-bold tracking-wider">cdelunasec<span class="text-blue-500">.sec</span></h1>
-    <div class="flex gap-2">
-      <span class="px-2 py-1 border border-slate-700 rounded text-[10px] text-slate-400">ES</span>
-      <button class="px-2 py-1 border border-slate-700 rounded text-[10px] hover:border-blue-500">TERMINAL</button>
+  <header class="w-full max-w-xl flex justify-between items-center z-10 py-4 border-b border-slate-800/80">
+    <h1 class="text-sm font-bold tracking-wider text-slate-200">retr0<span class="text-blue-500">.sec</span></h1>
+    <div class="flex gap-2 items-center">
+      <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+      <span class="text-[10px] text-emerald-400 font-bold uppercase tracking-widest">ONLINE</span>
     </div>
   </header>
 
   <!-- Hero Section -->
   <main class="w-full max-w-xl text-center my-8 z-10 flex flex-col items-center">
     
-    <!-- Avatar / Radar Circle -->
+    <!-- Avatar / Animation centrale -->
     <div class="relative w-36 h-36 mb-6 flex items-center justify-center">
-      <div class="absolute inset-0 border border-blue-500/40 rounded-full animate-spin"></div>
-      <div class="w-32 h-32 rounded-full overflow-hidden border-2 border-blue-500 bg-slate-900 flex items-center justify-center text-blue-400 font-bold text-2xl">
+      <div class="absolute inset-0 border border-dashed border-blue-500/50 rounded-full animate-spin" style="animation-duration: 12s;"></div>
+      <div class="w-32 h-32 rounded-full overflow-hidden border-2 border-blue-500 bg-slate-900/90 shadow-[0_0_20px_rgba(37,99,235,0.3)] flex items-center justify-center text-blue-400 font-bold text-3xl">
         >_
       </div>
     </div>
 
-    <p class="text-emerald-400 text-xs mb-2 tracking-widest">[ OK ] ACCESO CONCEDIDO · SESIÓN CIFRADA</p>
-    <h2 class="text-3xl font-black text-white tracking-tight mb-2">Pentester & Dev</h2>
-    <p class="text-blue-400 text-sm font-semibold mb-4">Cybersecurity & Full Stack</p>
+    <p class="text-emerald-400 text-xs mb-2 tracking-widest">[ SECURE ACCESS GRANTED ]</p>
+    <h2 class="text-3xl font-black text-white tracking-tight mb-2">Cybersecurity & Pentesting</h2>
+    <p class="text-blue-400 text-sm font-semibold mb-4">Offensive Security & Reverse Engineering</p>
     <p class="text-slate-400 text-xs max-w-sm mb-6 leading-relaxed">
-      Estudiante de Ciberseguridad. Apasionado por las pruebas de penetración, auditorías web y el desarrollo de herramientas técnicas.
+      Passionné par la sécurité offensive, l'exploitation binaire et le développement bas niveau (C, Python, ASM).
     </p>
 
     <!-- Boutons d'action -->
     <div class="flex flex-col gap-3 w-full max-w-xs mb-6">
-      <a href="#servicios" class="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs uppercase tracking-wider rounded transition shadow-[0_0_15px_rgba(37,99,235,0.4)] text-center">
-        Contratar Servicios
+      <a href="#projets" class="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs uppercase tracking-wider rounded transition shadow-[0_0_15px_rgba(37,99,235,0.4)] text-center">
+        Voir mes projets
       </a>
-      <a href="#proyectos" class="w-full py-3 border border-slate-700 hover:border-slate-500 text-slate-200 font-bold text-xs uppercase tracking-wider rounded transition text-center">
-        Conóceme
+      <a href="https://github.com/retr0x59" target="_blank" class="w-full py-3 border border-slate-700 hover:border-blue-500 text-slate-200 font-bold text-xs uppercase tracking-wider rounded transition text-center flex items-center justify-center gap-2">
+        GitHub Profile
       </a>
     </div>
 
-    <!-- Réseaux Sociaux -->
-    <div class="flex gap-4 mb-10 text-slate-400 text-xs">
-      <a href="https://github.com" target="_blank" class="p-2 border border-slate-800 rounded hover:text-white hover:border-slate-600">GitHub</a>
-      <a href="https://linkedin.com" target="_blank" class="p-2 border border-slate-800 rounded hover:text-white hover:border-slate-600">LinkedIn</a>
-      <a href="https://wa.me/" target="_blank" class="p-2 border border-slate-800 rounded hover:text-white hover:border-slate-600">WhatsApp</a>
-    </div>
-
-    <!-- SECTION TERMINAL INTERACTIF -->
-    <section class="w-full bg-slate-900 border border-slate-800 rounded-lg text-left overflow-hidden shadow-2xl mb-10">
+    <!-- SECTION TERMINAL INTERACTIF (Fixée et dynamique) -->
+    <section class="w-full bg-slate-900/90 border border-slate-800 rounded-lg text-left overflow-hidden shadow-2xl mb-10 backdrop-blur">
       <div class="bg-slate-950 px-4 py-2 border-b border-slate-800 flex justify-between items-center">
         <div class="flex gap-1.5">
           <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
           <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
           <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
         </div>
-        <span class="text-[10px] text-emerald-400 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> LIVE
-        </span>
+        <span class="text-[10px] text-slate-400 font-mono">bash - retr0@kali</span>
       </div>
       
-      <div class="p-4 text-xs space-y-2 text-slate-300">
-        <p class="text-slate-500">deluna@kali:~$ whoami</p>
-        <p class="text-emerald-400">Esta terminal lee tu propia sesión en el navegador. Nada sale de tu equipo, todo se calcula aquí mismo.</p>
-        <p class="text-slate-500">deluna@kali:~$ scan --visitor</p>
-        <p id="visitor-info" class="text-blue-300 space-y-1">
-          <!-- Injecté dynamiquement par JS -->
-        </p>
+      <div class="p-4 text-xs space-y-3 text-slate-300 font-mono">
+        <div>
+          <span class="text-slate-500">retr0@kali:~$</span> <span class="text-slate-200">whoami</span>
+          <p class="text-emerald-400 mt-1">Pentester / Étudiant en sécurité offensive & reverse engineering.</p>
+        </div>
+        <div>
+          <span class="text-slate-500">retr0@kali:~$</span> <span class="text-slate-200">cat skills.txt</span>
+          <p class="text-blue-300 mt-1">[ C, Python, Assembly, Linux, GDB, Pwntools, Hack The Box ]</p>
+        </div>
+        <div>
+          <span class="text-slate-500">retr0@kali:~$</span> <span class="text-slate-200">sys_scan --visitor</span>
+          <div id="visitor-info" class="text-slate-400 mt-1 space-y-0.5">
+            <!-- Injecté dynamiquement -->
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- SECTION SERVICES -->
-    <section id="servicios" class="w-full text-left space-y-4">
-      <h3 class="text-lg font-bold text-white border-l-2 border-blue-500 pl-3">En qué te puedo ayudar</h3>
-      <p class="text-xs text-slate-400">Toca un servicio para ver el detalle, o contrátalo directo por WhatsApp.</p>
+    <!-- SECTION PROJET / LABS -->
+    <section id="projets" class="w-full text-left space-y-4">
+      <h3 class="text-lg font-bold text-white border-l-2 border-blue-500 pl-3">Domaines d'expertise & Labs</h3>
+      <p class="text-xs text-slate-400">Axes de travail et apprentissage technique continu.</p>
 
       <div class="space-y-3 mt-4">
-        <div class="p-4 bg-slate-900/60 border border-slate-800 rounded-lg">
-          <span class="text-[10px] text-blue-400 font-bold">01</span>
-          <h4 class="text-sm font-bold text-white mt-1">Escaneo de vulnerabilidades</h4>
-          <p class="text-xs text-slate-400 mt-1">Puertos, servicios y versiones expuestas con reporte de riesgos.</p>
+        <div class="p-4 bg-slate-900/60 border border-slate-800 rounded-lg hover:border-blue-500/50 transition">
+          <span class="text-[10px] text-blue-400 font-bold">01 // OFFENSIVE SEC</span>
+          <h4 class="text-sm font-bold text-white mt-1">Pentesting & Hack The Box</h4>
+          <p class="text-xs text-slate-400 mt-1">Résolution de machines, analyse de vulnérabilités et entraînement régulier sur des scénarios réalistes.</p>
         </div>
 
-        <div class="p-4 bg-slate-900/60 border border-slate-800 rounded-lg">
-          <span class="text-[10px] text-blue-400 font-bold">02</span>
-          <h4 class="text-sm font-bold text-white mt-1">Auditoría de seguridad web</h4>
-          <p class="text-xs text-slate-400 mt-1">WordPress y sitios a medida: plugins, archivos expuestos, usuarios.</p>
+        <div class="p-4 bg-slate-900/60 border border-slate-800 rounded-lg hover:border-blue-500/50 transition">
+          <span class="text-[10px] text-blue-400 font-bold">02 // LOW LEVEL</span>
+          <h4 class="text-sm font-bold text-white mt-1">Reverse Engineering & Pwn</h4>
+          <p class="text-xs text-slate-400 mt-1">Exploitation binaire, analyse de code assembleur, utilisation de GDB/Pwndbg et Ghidra.</p>
         </div>
       </div>
     </section>
 
   </main>
 
-  <!-- Script pour simuler le terminal dynamique -->
+  <!-- Script pour les infos dynamiques du visiteur -->
   <script>
     const visitorBox = document.getElementById('visitor-info');
-    const userAgent = navigator.userAgent;
-    let os = "Desconocido";
-    if (userAgent.indexOf("Win") !== -1) os = "Windows";
-    if (userAgent.indexOf("Mac") !== -1) os = "MacOS";
-    if (userAgent.indexOf("Linux") !== -1) os = "Linux";
-    if (userAgent.indexOf("like Mac") !== -1) os = "iOS";
-    if (userAgent.indexOf("Android") !== -1) os = "Android";
+    const ua = navigator.userAgent;
+    let os = "Inconnu";
+    if (ua.indexOf("Win") !== -1) os = "Windows";
+    if (ua.indexOf("Mac") !== -1) os = "MacOS";
+    if (ua.indexOf("Linux") !== -1) os = "Linux";
+    if (ua.indexOf("Android") !== -1) os = "Android";
+    if (ua.indexOf("like Mac") !== -1) os = "iOS";
 
     visitorBox.innerHTML = `
-      <div>objetivo adquirido -> tu sesión</div>
-      <div>sistema : ${os}</div>
-      <div>viewport : ${window.innerWidth}x${window.innerHeight}</div>
-      <div>veredicto : <span class="text-emerald-400 font-bold">sesión limpia.</span></div>
+      <div>> OS détecté : <span class="text-blue-300">${os}</span></div>
+      <div>> Résolution : <span class="text-blue-300">${window.innerWidth}x${window.innerHeight}</span></div>
+      <div>> Statut : <span class="text-emerald-400 font-bold">Connexion chiffrée & sécurisée</span></div>
     `;
   </script>
 
