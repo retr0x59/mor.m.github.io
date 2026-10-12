@@ -1,143 +1,191 @@
-/* retr0x59.sec · shared logic for all pages */
-(function(){
-"use strict";
-const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
-const store={get(k,d){try{const v=sessionStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{sessionStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
-const fine=matchMedia("(pointer:fine)").matches;
-const root=document.documentElement;
-let lang=root.dataset.lang||"en";
-const t=(es,en)=>lang==="es"?es:en;
-window.CDL={t:(es,en)=>t(es,en),get lang(){return lang}};
+/* retr0x59 · shared logic for all pages */
+(function () {
+  "use strict";
 
-/* ---------- nav ---------- */
-const links=$("#links")||$("#nav-links");
-const slug=s=>(s.split("/").pop().replace(/\.html$/,"")||"index").replace(/^index$/,"home");
-const page=document.body.dataset.page||slug(location.pathname);
-if(links)$$("a",links).forEach(a=>a.classList.toggle("on",(a.dataset.k||slug(a.getAttribute("href")))===page));
-const menuBtn=$("#menuBtn");
-if(menuBtn&&links){
- menuBtn.addEventListener("click",()=>links.classList.toggle("open"));
- links.addEventListener("click",e=>{if(e.target.closest("a"))links.classList.remove("open")});
-}
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const store = {
+    get(k, d) { try { const v = sessionStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
+    set(k, v) { try { sessionStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+  };
 
-/* ---------- language ---------- */
-const langBtn=$("#langBtn");
-function setLang(l){lang=l;root.dataset.lang=l;root.lang=l;try{localStorage.setItem("cdl-lang",l)}catch(e){}if(langBtn)langBtn.textContent=l.toUpperCase()}
-if(langBtn){langBtn.textContent=lang.toUpperCase();langBtn.addEventListener("click",()=>setLang(lang==="en"?"es":"en"))}
+  /* ---------- status bar ---------- */
+  const wins = $("#wins");
+  const page = document.body.dataset.page;
+  if (wins) $$("a", wins).forEach(a => a.classList.toggle("on", a.dataset.k === page));
 
-/* ---------- effects ---------- */
-const rvs=$$(".rv");
-if(rvs.length&&"IntersectionObserver" in window&&!matchMedia("(prefers-reduced-motion:reduce)").matches){
- const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.remove("pre");io.unobserve(e.target)}}),{rootMargin:"0px 0px -8% 0px"});
- rvs.forEach(el=>{el.classList.add("pre");io.observe(el)});
-}
-if(fine){
- $$(".spot").forEach(el=>el.addEventListener("pointermove",e=>{const r=el.getBoundingClientRect();el.style.setProperty("--mx",e.clientX-r.left+"px");el.style.setProperty("--my",e.clientY-r.top+"px")}));
- $$(".mag").forEach(b=>{
-  b.addEventListener("pointermove",e=>{const r=b.getBoundingClientRect();b.style.transform=`translate(${(e.clientX-r.left-r.width/2)*.2}px,${(e.clientY-r.top-r.height/2)*.3}px)`});
-  b.addEventListener("pointerleave",()=>b.style.transform="");
- });
-}
-$$(".glitch").forEach(g=>{
- const zap=()=>{g.classList.remove("gx");void g.offsetWidth;g.classList.add("gx")};
- g.addEventListener("mouseenter",zap);setTimeout(zap,600);setInterval(zap,6000);
-});
+  const clock = $("#clock");
+  if (clock) {
+    const tick = () => { clock.textContent = new Date().toTimeString().slice(0, 5); };
+    tick();
+    setInterval(tick, 20000);
+  }
 
-/* ---------- feedback form (about) ---------- */
-const tBtn=$("#tBtn"),tForm=$("#tForm");
-if(tBtn&&tForm){
- tBtn.addEventListener("click",()=>{tForm.hidden=!tForm.hidden;if(!tForm.hidden)$("#tName").focus()});
- tForm.addEventListener("submit",e=>{
-  e.preventDefault();tForm.reset();
-  const n=$("#tNote");
-  if(n)n.textContent=t("Modo vista previa: el mensaje no se envió a ningún servidor.","Preview mode: the message was not sent to any server.");
- });
-}
-
-/* ---------- terminal dock ---------- */
-const tdock=$("#tdock"),tOut=$("#tOut"),tIn=$("#tIn"),tboot=$("#tboot"),tvBtn=$("#tvBtn");
-if(tdock&&tOut&&tIn){
- const print=(txt,cls="o")=>{const d=document.createElement("div");d.className=cls;d.textContent=txt;tOut.appendChild(d);tOut.scrollTop=tOut.scrollHeight};
- const pages=()=>links?$$("a",links).map(a=>a.getAttribute("href")):[];
- const setH=h=>{h=Math.max(180,Math.min(innerHeight-90,h));root.style.setProperty("--th",h+"px");return h};
- const hist=[];let hi=0;
- const CMDS={
-  help(){print("help  whoami  skills  ls  open <page>  lang  date  clear  exit","y")},
-  whoami(){print("retr0x59 · "+t("seguridad ofensiva, pentesting, desarrollo de bajo nivel y reversing","offensive security, pentesting, low-level development and reversing"))},
-  skills(){["Recon     : Nmap, ffuf, dig, smbclient, Wireshark","Web       : Burp Suite, sqlmap, curl, OWASP ZAP","Low-level : GDB, pwndbg, GEF, Pwntools, Ghidra, IDA","Languages : C, Assembly x86/x64, Python, Bash"].forEach(l=>print(l))},
-  ls(){print(pages().join("  ")||"index.html")},
-  open(p){
-   if(!p)return print(t("uso: open <página>","usage: open <page>"),"y");
-   const f=pages().find(h=>h===p||h===p+".html");
-   if(!f)return print(t("página no encontrada: ","no such page: ")+p,"r");
-   location.href=f;
-  },
-  lang(){setLang(lang==="en"?"es":"en");print("lang = "+lang,"g")},
-  date(){print(new Date().toString())},
-  clear(){tOut.textContent=""},
-  exit(){closeT()}
- };
- CMDS.cd=CMDS.open;
- const run=line=>{
-  print("└─$ "+line,"c");
-  const [cmd,...args]=line.trim().split(/\s+/);
-  if(!cmd)return;
-  hist.push(line);hi=hist.length;
-  if(Object.prototype.hasOwnProperty.call(CMDS,cmd))CMDS[cmd](args[0]);
-  else print(cmd+": "+t("comando no encontrado (prueba 'help')","command not found (try 'help')"),"r");
- };
- function openT(user){
-  tdock.hidden=false;document.body.classList.add("tv-open");store.set("cdl-tv",1);
-  if(!tOut.childElementCount)print(t("Escribe 'help' para ver los comandos.","Type 'help' to list commands."),"g");
-  if(!user)return;
-  if(!tboot)return tIn.focus();
-  tboot.textContent="[ OK ] mounting /dev/tty0\n[ OK ] session retr0x59@kali\n[ OK ] shell ready";
-  tboot.hidden=false;setTimeout(()=>{tboot.hidden=true;tIn.focus()},600);
- }
- function closeT(){tdock.hidden=true;document.body.classList.remove("tv-open");store.set("cdl-tv",0)}
- setH(store.get("cdl-th",320));
- if(tvBtn)tvBtn.addEventListener("click",()=>tdock.hidden?openT(true):closeT());
- tIn.addEventListener("keydown",e=>{
-  if(e.key==="Enter"){run(tIn.value);tIn.value=""}
-  else if(e.key==="ArrowUp"&&hi>0){tIn.value=hist[--hi];e.preventDefault()}
-  else if(e.key==="ArrowDown"){tIn.value=hist[++hi]||"";hi=Math.min(hi,hist.length)}
-  else if(e.key==="Escape")closeT();
- });
- tOut.addEventListener("click",()=>{if(!String(getSelection()))tIn.focus()});
- const grip=$("#grip");
- if(grip)grip.addEventListener("pointerdown",e=>{
-  e.preventDefault();grip.setPointerCapture(e.pointerId);
-  const mv=ev=>store.set("cdl-th",setH(innerHeight-ev.clientY));
-  const up=()=>{grip.removeEventListener("pointermove",mv);grip.removeEventListener("pointerup",up)};
-  grip.addEventListener("pointermove",mv);grip.addEventListener("pointerup",up);
- });
- if(store.get("cdl-tv",0))openT(false);
-}
-
-/* ---------- Selene (portfolio assistant) ---------- */
-const bot=$("#bot"),botBtn=$("#botBtn"),botMsgs=$("#botMsgs"),botChips=$("#botChips");
-if(bot&&botBtn&&botMsgs&&botChips){
- const QA=[
-  {q:["¿Quién es retr0x59?","Who is retr0x59?"],a:["Un practicante de seguridad ofensiva centrado en pentesting, desarrollo de bajo nivel y análisis binario.","An offensive security practitioner focused on penetration testing, low-level development and binary analysis."]},
-  {q:["¿Qué herramientas usa?","What tools does he use?"],a:["GDB, GEF, Pwntools, Ghidra, Nmap y Burp Suite, con C, Python y Assembly x86/x64 sobre Linux.","GDB, GEF, Pwntools, Ghidra, Nmap and Burp Suite, with C, Python and Assembly x86/x64 on Linux."]},
-  {q:["¿En qué trabaja ahora?","What is he working on?"],a:["Preparando la certificación HTB CPTS y practicando en Hack The Box, pwn.college y OST2.","Preparing the HTB CPTS certification and practicing on Hack The Box, pwn.college and OST2."]}
- ];
- const say=(txt,who)=>{const d=document.createElement("div");d.className="m "+who;d.textContent=txt;botMsgs.appendChild(d);botMsgs.scrollTop=botMsgs.scrollHeight};
- const chips=()=>{
-  botChips.textContent="";
-  QA.forEach(x=>{
-   const b=document.createElement("button");b.type="button";b.textContent=t(x.q[0],x.q[1]);
-   b.addEventListener("click",()=>{say(b.textContent,"me");setTimeout(()=>say(t(x.a[0],x.a[1]),"it"),250)});
-   botChips.appendChild(b);
+  /* ---------- name <-> bytes ---------- */
+  const letters = $$(".ident h1 span"), bytes = $$(".ident .bytes span");
+  letters.forEach((el, i) => {
+    [el, bytes[i]].forEach(n => {
+      if (!n) return;
+      n.addEventListener("pointerenter", () => { el.classList.add("hot"); bytes[i].classList.add("hot"); });
+      n.addEventListener("pointerleave", () => { el.classList.remove("hot"); bytes[i].classList.remove("hot"); });
+    });
   });
- };
- botBtn.addEventListener("click",()=>{
-  bot.hidden=!bot.hidden;
-  if(bot.hidden)return;
-  chips();
-  if(!botMsgs.childElementCount)say(t("Hola, soy Selene. Elige una pregunta.","Hi, I'm Selene. Pick a question."),"it");
- });
- const botX=$("#botX");
- if(botX)botX.addEventListener("click",()=>{bot.hidden=true});
-}
+
+  /* ---------- hexdump ---------- */
+  const hex = n => n.toString(16).padStart(2, "0");
+  const ascii = n => (n >= 32 && n < 127 ? String.fromCharCode(n) : ".");
+  // plain-text xxd rows, used by the shell
+  function xxd(text, cols = 16) {
+    const data = new TextEncoder().encode(text), rows = [];
+    for (let o = 0; o < data.length; o += cols) {
+      const row = [...data.slice(o, o + cols)];
+      rows.push(o.toString(16).padStart(8, "0") + "  " + row.map(hex).join(" ").padEnd(cols * 3 - 1) + "  |" + row.map(ascii).join("") + "|");
+    }
+    return rows;
+  }
+
+  const dump = $("#hex");
+  if (dump) {
+    const data = new TextEncoder().encode(dump.textContent.trim());
+    const span = (tag, i, txt) => { const s = document.createElement(tag); s.dataset.i = i; s.textContent = txt; return s; };
+    let cols = 0;
+    const render = () => {
+      const want = innerWidth < 700 ? 8 : 16;
+      if (want === cols) return;
+      cols = want;
+      dump.textContent = "";
+      for (let o = 0; o < data.length; o += cols) {
+        const row = [...data.slice(o, o + cols)];
+        const off = document.createElement("span");
+        off.className = "off";
+        off.textContent = o.toString(16).padStart(cols === 8 ? 4 : 8, "0");
+        dump.append(off, "  ");
+        row.forEach((b, j) => dump.append(span("b", o + j, hex(b)), " "));
+        dump.append(" ".repeat((cols - row.length) * 3) + " |");
+        row.forEach((b, j) => dump.append(span("i", o + j, ascii(b))));
+        dump.append("|\n");
+      }
+    };
+    const light = e => {
+      $$(".hot", dump).forEach(n => n.classList.remove("hot"));
+      const i = e.target.dataset && e.target.dataset.i;
+      if (e.type === "pointerover" && i !== undefined) $$(`[data-i="${i}"]`, dump).forEach(n => n.classList.add("hot"));
+    };
+    dump.addEventListener("pointerover", light);
+    dump.addEventListener("pointerleave", light);
+    addEventListener("resize", render);
+    render();
+  }
+
+  /* ---------- shell ---------- */
+  const term = $("#term"), out = $("#termOut"), input = $("#termIn"), termBtn = $("#termBtn");
+  if (term && out && input) {
+    const root = document.documentElement;
+    const print = (txt, cls) => {
+      const d = document.createElement("div");
+      if (cls) d.className = cls;
+      d.textContent = txt;
+      out.appendChild(d);
+      out.scrollTop = out.scrollHeight;
+    };
+    const pages = () => (wins ? $$("a", wins).map(a => a.getAttribute("href")) : []);
+    const setH = h => { h = Math.max(180, Math.min(innerHeight - 90, h)); root.style.setProperty("--th", h + "px"); return h; };
+    const hist = [];
+    let hi = 0;
+
+    const CMDS = {
+      help() { print("help  whoami  file  skills  roadmap  ls  open <page>  xxd <text>  github  date  clear  exit", "y"); },
+      whoami() { print("retr0x59 · learning offensive security: pentesting, low-level development, reverse engineering"); },
+      file() { print("retr0x59: ELF 64-bit LSB executable, x86-64, dynamically linked, not stripped", "t"); },
+      skills() {
+        [
+          "recon      Nmap, ffuf, dig, smbclient, Wireshark",
+          "web        Burp Suite, sqlmap, curl, OWASP ZAP",
+          "reversing  GDB, pwndbg, GEF, Pwntools, Ghidra, IDA",
+          "langs      C, Assembly x86/x64, Python, Bash"
+        ].forEach(l => print(l));
+      },
+      roadmap() {
+        print("[x] Linux & low-level foundations", "g");
+        print("[x] Binary exploitation & reverse engineering", "g");
+        print("[x] Hack The Box Academy", "g");
+        print("[>] HTB CPTS certification", "y");
+        print("[ ] Advanced exploitation & research");
+      },
+      ls() { print(pages().join("  ")); },
+      open(args) {
+        const p = args[0];
+        if (!p) return print("usage: open <page>", "y");
+        const f = pages().find(h => h === p || h === p + ".html");
+        if (!f) return print("no such page: " + p, "r");
+        location.href = f;
+      },
+      xxd(args) {
+        if (!args.length) return print("usage: xxd <text>", "y");
+        xxd(args.join(" ")).forEach(l => print(l));
+      },
+      github() { print("https://github.com/retr0x59", "t"); },
+      date() { print(new Date().toString()); },
+      clear() { out.textContent = ""; },
+      exit() { close(); }
+    };
+    CMDS.cd = CMDS.open;
+
+    const run = line => {
+      print("$ " + line, "c");
+      const [cmd, ...args] = line.trim().split(/\s+/);
+      if (!cmd) return;
+      hist.push(line);
+      hi = hist.length;
+      if (Object.prototype.hasOwnProperty.call(CMDS, cmd)) CMDS[cmd](args);
+      else print(cmd + ": command not found (try 'help')", "r");
+    };
+
+    function open(focus) {
+      term.hidden = false;
+      document.body.classList.add("term-open");
+      if (termBtn) termBtn.setAttribute("aria-expanded", "true");
+      store.set("rx-term", 1);
+      if (!out.childElementCount) print("Type 'help' to list commands.", "g");
+      if (focus) input.focus();
+    }
+    function close() {
+      term.hidden = true;
+      document.body.classList.remove("term-open");
+      if (termBtn) termBtn.setAttribute("aria-expanded", "false");
+      store.set("rx-term", 0);
+    }
+    const toggle = () => (term.hidden ? open(true) : close());
+
+    setH(store.get("rx-th", 320));
+    if (termBtn) termBtn.addEventListener("click", toggle);
+    const x = $("#termClose");
+    if (x) x.addEventListener("click", close);
+
+    input.addEventListener("keydown", e => {
+      if (e.key === "Enter") { run(input.value); input.value = ""; }
+      else if (e.key === "ArrowUp" && hi > 0) { input.value = hist[--hi]; e.preventDefault(); }
+      else if (e.key === "ArrowDown") { hi = Math.min(hi + 1, hist.length); input.value = hist[hi] || ""; }
+      else if (e.key === "Escape") close();
+    });
+    out.addEventListener("click", () => { if (!String(getSelection())) input.focus(); });
+    // backtick toggles the shell from anywhere on the page
+    addEventListener("keydown", e => {
+      if (e.key !== "`" || e.ctrlKey || e.metaKey || e.altKey) return;
+      e.preventDefault();
+      toggle();
+    });
+
+    const grip = $("#termGrip");
+    if (grip) grip.addEventListener("pointerdown", e => {
+      e.preventDefault();
+      grip.setPointerCapture(e.pointerId);
+      const move = ev => store.set("rx-th", setH(innerHeight - ev.clientY));
+      const up = () => { grip.removeEventListener("pointermove", move); grip.removeEventListener("pointerup", up); };
+      grip.addEventListener("pointermove", move);
+      grip.addEventListener("pointerup", up);
+    });
+
+    if (store.get("rx-term", 0)) open(false);
+  }
 })();

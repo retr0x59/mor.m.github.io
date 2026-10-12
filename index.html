@@ -1,116 +1,78 @@
 <!DOCTYPE html>
-<html lang="en" data-lang="en">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>retr0x59.sec // Offensive Security Portfolio</title>
-  <link rel="stylesheet" href="assets/css/style.css">
+  <title>retr0x59 · offensive security & low-level</title>
+  <meta name="description" content="retr0x59: learning offensive security, reverse engineering and binary exploitation in C, Python and x86-64 assembly.">
+  <meta name="theme-color" content="#0b0a08">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230b0a08'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='monospace' font-size='15' font-weight='700' fill='%23ffb000'%3E0x%3C/text%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Mono:wght@700&display=swap">
+  <link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body>
+<body data-page="home">
 
-  <!-- Navigation Bar -->
-  <header class="nav">
-    <div class="wrap">
-      <a href="index.html" class="logo">
-        retr0x59<b>.sec</b><span class="cur"></span>
-      </a>
-      <nav class="links" id="nav-links">
-        <a href="index.html" class="on">Home</a>
-        <a href="about.html">About</a>
-      </nav>
-      <div class="tools">
-        <button class="btn-ghost menu-btn" onclick="document.getElementById('nav-links').classList.toggle('open')">Menu</button>
-      </div>
+  <header class="bar">
+    <a class="sess" href="index.html">[retr0x59]</a>
+    <nav class="wins" id="wins" aria-label="Main navigation">
+      <a href="index.html" data-k="home">0:home</a>
+      <a href="about.html" data-k="about">1:about</a>
+    </nav>
+    <div class="right">
+      <span class="clock" id="clock" aria-hidden="true"></span>
+      <button id="termBtn" aria-expanded="false" aria-controls="term">&gt;_ shell</button>
     </div>
   </header>
 
   <main>
-    <!-- Hero Section -->
-    <section class="hero">
-      <div class="wrap">
-        <div class="hero-text">
-          <div class="boot">[ OK ] <span>ACCESS GRANTED · ENCRYPTED SESSION</span></div>
-          <h1>retr0x59 <em>Offensive Sec</em></h1>
-          <div class="typed" id="typed-text">Pentesting | Low-Level Dev | Reverse Engineering</div>
-          <p class="lead">
-            Offensive security practitioner focused on penetration testing, vulnerability research, and binary exploitation (C, Python, Assembly).
-          </p>
-
-          <div class="cta">
-            <a href="about.html" class="btn line">About Me</a>
-          </div>
-
-          <div class="socials">
-            <a href="https://github.com/retr0x59" target="_blank" title="GitHub">
-              <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-            </a>
-          </div>
-        </div>
-
-        <!-- Avatar / Radar -->
-        <div class="avatar">
-          <div class="ring r1"></div>
-          <div class="ring r2"></div>
-          <div class="ring r3"></div>
-          <div class="ring r4"></div>
-          <div class="orbit"></div>
-          <div class="scanbar"></div>
-          <img src="assets/img/avatar.jpg" alt="retr0x59 Avatar" onerror="this.onerror=null;this.src='assets/img/avatar.svg'">
-          <div class="tag-float t1">STATUS: <i>ONLINE</i></div>
-          <div class="tag-float t2">TARGET: <i>CPTS / HTB</i></div>
-        </div>
+    <section class="hero wrap">
+      <p class="cmd in">file ./retr0x59</p>
+      <div class="ident in" style="--i:1">
+        <h1 aria-label="retr0x59"><span>r</span><span>e</span><span>t</span><span>r</span><span>0</span><span>x</span><span>5</span><span>9</span></h1>
+        <p class="bytes" aria-hidden="true"><span>72</span><span>65</span><span>74</span><span>72</span><span>30</span><span>78</span><span>35</span><span>39</span></p>
+      </div>
+      <p class="out in" style="--i:2;margin-top:22px">ELF 64-bit LSB executable, x86-64, dynamically linked, not stripped</p>
+      <p class="lead in" style="--i:3">
+        Learning offensive security from the byte level up. I take binaries and networks apart to understand how they work, in C, Python and x86-64 assembly.
+      </p>
+      <div class="cta in" style="--i:4">
+        <a class="btn solid" href="about.html">./about</a>
+        <a class="btn" href="https://github.com/retr0x59" target="_blank" rel="noopener">github ↗</a>
       </div>
     </section>
 
-    <!-- Strip Bar -->
-    <section class="strip">
-      <div class="wrap">
-        <div class="cell">
-          <div class="k">Specialization</div>
-          <div class="v">Pentesting <small>& Exploitation</small></div>
-        </div>
-        <div class="cell">
-          <div class="k">Core Languages</div>
-          <div class="v">C / Python <small>Assembly x86/x64</small></div>
-        </div>
-        <div class="cell">
-          <div class="k">Environment</div>
-          <div class="v">Linux / Kali <small>GDB / Pwntools / GEF</small></div>
-        </div>
-        <div class="cell">
-          <div class="k">Platforms</div>
-          <div class="v">Hack The Box <small>pwn.college / OST2</small></div>
-        </div>
-      </div>
+    <section class="panel wrap">
+      <h2 class="ctx">registers</h2>
+      <dl class="regs">
+        <dt>focus</dt><dd>pentesting <small>&amp; exploitation</small></dd>
+        <dt>langs</dt><dd>C / Python <small>/ x86-64 assembly</small></dd>
+        <dt>env</dt><dd>Linux <small>· GDB / GEF / pwntools</small></dd>
+        <dt>labs</dt><dd>Hack The Box <small>· pwn.college · OST2</small></dd>
+        <dt>goal</dt><dd>HTB CPTS <small>← in progress</small></dd>
+      </dl>
     </section>
 
-    <!-- Terminal Section -->
-    <section class="block">
-      <div class="wrap">
-        <div class="head">
-          <div>
-            <div class="eyebrow">Interactive Shell</div>
-            <h2>whoami</h2>
-          </div>
-          <p>This terminal evaluates your session locally. All scripts run entirely client-side.</p>
-        </div>
-
-        <div class="term">
-          <div class="term-bar">
-            <i></i><i></i><i></i>
-            <span>retr0x59@kali: ~/portfolio</span>
-            <span class="live">● LIVE</span>
-          </div>
-          <div class="term-body" id="console-output"></div>
-        </div>
-      </div>
+    <section class="panel wrap">
+      <h2 class="ctx">memory</h2>
+      <pre class="hex" id="hex">retr0x59 :: learning offensive security. pentesting, reverse engineering, binary exploitation. C / python / x86-64 asm. target: HTB CPTS.</pre>
+      <p class="hint">Hover a byte to find its character, or press <span class="out">`</span> to open the shell.</p>
     </section>
   </main>
 
+  <footer class="eof">
+    <span>-- EOF --</span>
+    <span>© 2026 retr0x59 · <a href="https://github.com/retr0x59" target="_blank" rel="noopener">github</a></span>
+  </footer>
+
+  <div class="term" id="term" hidden>
+    <div class="grip" id="termGrip" title="Drag to resize"></div>
+    <div class="head">shell <button id="termClose" aria-label="Close shell">[x]</button></div>
+    <div class="output" id="termOut" aria-live="polite"></div>
+    <div class="input"><label for="termIn">$</label><input id="termIn" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="help"></div>
+  </div>
+
   <script src="assets/js/main.js"></script>
-  <script src="assets/js/home.js"></script>
 </body>
 </html>

@@ -1,191 +1,112 @@
-<!doctype html>
-<html lang="en" data-lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>About · retr0x59.sec</title>
-<meta name="description" content="About retr0x59: Offensive security, low-level development, binary exploitation, and continuous learning.">
-<meta property="og:title" content="About · retr0x59.sec">
-<meta property="og:description" content="Offensive security practitioner, low-level developer, and binary exploitation enthusiast.">
-<meta name="theme-color" content="#04080f">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2304080f'/%3E%3Ctext x='5' y='22' font-family='monospace' font-size='16' font-weight='700' fill='%234d8dff'%3E%3E_%3C/text%3E%3C/svg%3E">
-<script>try{document.documentElement.dataset.lang=localStorage.getItem("cdl-lang")||"en"}catch(e){document.documentElement.dataset.lang="en"}</script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap">
-<link rel="stylesheet" href="assets/css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>about · retr0x59</title>
+  <meta name="description" content="About retr0x59: offensive security, low-level development, binary exploitation, and continuous learning.">
+  <meta name="theme-color" content="#0b0a08">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230b0a08'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='monospace' font-size='15' font-weight='700' fill='%23ffb000'%3E0x%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Mono:wght@700&display=swap">
+  <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body data-page="about">
-<header class="nav">
-  <div class="wrap">
-    <a class="logo" href="index.html" aria-label="retr0x59.sec">retr0x59<b>.</b>sec<span class="cur"></span></a>
-    <nav class="links" id="links" aria-label="Main Navigation">
-      <a href="index.html" data-k="home">Home</a>
-      <a href="about.html" data-k="about">About</a>
+
+  <header class="bar">
+    <a class="sess" href="index.html">[retr0x59]</a>
+    <nav class="wins" id="wins" aria-label="Main navigation">
+      <a href="index.html" data-k="home">0:home</a>
+      <a href="about.html" data-k="about">1:about</a>
     </nav>
-    <div class="tools">
-      <button class="btn-ghost" id="langBtn" aria-label="Change language">EN</button>
-      <button class="btn-ghost" id="tvBtn">Terminal</button>
-      <button class="btn-ghost menu-btn" id="menuBtn" aria-label="Menu">☰</button>
+    <div class="right">
+      <span class="clock" id="clock" aria-hidden="true"></span>
+      <button id="termBtn" aria-expanded="false" aria-controls="term">&gt;_ shell</button>
     </div>
-  </div>
-</header>
-<main id="top">
-<section class="phero">
-  <div class="radar" aria-hidden="true"><i></i><i></i><i></i><b></b></div>
-  <div class="wrap">
-    <div class="boot ld" style="justify-content:center;display:flex">[ OK ] <span>&nbsp;PROFILE LOADED</span></div>
-    <h1 class="ld" style="animation-delay:.1s"><span class="glitch" data-text="About me">About me</span></h1>
-    <p class="sub ld" style="animation-delay:.2s">Offensive security, binary analysis, and technical path.</p>
-  </div>
-</section>
-<div class="crumbs"><div class="wrap"><a href="index.html">Home</a> / <span>About</span></div></div>
-<section class="block">
-  <div class="wrap ab">
-    <figure class="ab-img rv spot" style="margin:0"><img src="assets/img/avatar.jpg" alt="retr0x59 Avatar" onerror="this.onerror=null;this.src='assets/img/avatar.svg'"><figcaption>~/retr0x59 · Security Lab</figcaption></figure>
-    <div class="ab-txt rv">
-      <div class="eyebrow">Offensive Security</div>
-      <h2 style="margin-top:10px">Understanding mechanisms down to the byte level</h2>
-      <div>
-        <p>I am an offensive security practitioner focused on penetration testing, low-level development, and binary analysis. My approach relies on active hands-on methodology—breaking down complex targets, understanding how systems work internally, and learning how to exploit vulnerabilities safely and effectively.</p>
-        <p>I regularly practice reverse engineering and exploit development using C, Python, and Assembly (x86/x64). Through hands-on platforms like Hack The Box Academy, pwn.college, and OpenSecurityTraining2 (OST2), I consistently build skills across memory corruption, custom protocol analysis, and offensive automation.</p>
-        <p>I maintain structured notes and document technical processes to refine my workflows. Building custom tools and analyzing low-level code allows me to bridge the gap between offensive techniques and system security defense.</p>
-        <p>My technical roadmap is geared toward mastering network and Active Directory penetration testing, working toward CPTS certification, and expanding my expertise in binary exploitation.</p>
-      </div>
-      <dl class="info">
-        <div><dt>Focus:</dt><dd>Pentesting & Low-Level Exploitation</dd></div>
-        <div><dt>Method:</dt><dd>Recon → Low-Level Analysis → Validation → Remediation</dd></div>
-        <div><dt>Core Tech:</dt><dd>C, Python, Assembly (x86/x64), Linux</dd></div>
-        <div><dt>Tooling:</dt><dd>GDB, GEF, Pwntools, Ghidra, Nmap, Burp Suite</dd></div>
-        <div><dt>Platforms:</dt><dd>Hack The Box, pwn.college, OST2</dd></div>
-        <div><dt>Status:</dt><dd>CPTS Preparation / Cyber Operations Focus</dd></div>
-        <div><dt>Open to:</dt><dd>Offensive Security Research & Technical Projects</dd></div>
+  </header>
+
+  <main>
+    <section class="page-hero wrap">
+      <p class="cmd in">cat about.md</p>
+      <h1 class="in" style="--i:1">Understanding mechanisms down to the byte level</h1>
+    </section>
+
+    <section class="panel wrap prose">
+      <h2 class="ctx">.text</h2>
+      <p>I am an offensive security practitioner focused on penetration testing, low-level development, and binary analysis. My approach relies on active hands-on methodology—breaking down complex targets, understanding how systems work internally, and learning how to exploit vulnerabilities safely and effectively.</p>
+      <p>I regularly practice reverse engineering and exploit development using C, Python, and Assembly (x86/x64). Through hands-on platforms like Hack The Box Academy, pwn.college, and OpenSecurityTraining2 (OST2), I consistently build skills across memory corruption, custom protocol analysis, and offensive automation.</p>
+      <p>I maintain structured notes and document technical processes to refine my workflows. Building custom tools and analyzing low-level code allows me to bridge the gap between offensive techniques and system security defense.</p>
+      <p>My technical roadmap is geared toward mastering network and Active Directory penetration testing, working toward CPTS certification, and expanding my expertise in binary exploitation.</p>
+    </section>
+
+    <section class="panel wrap">
+      <h2 class="ctx">registers</h2>
+      <dl class="regs">
+        <dt>focus</dt><dd>Pentesting &amp; Low-Level Exploitation</dd>
+        <dt>method</dt><dd>Recon → Low-Level Analysis → Validation → Remediation</dd>
+        <dt>tech</dt><dd>C, Python, Assembly (x86/x64), Linux</dd>
+        <dt>tooling</dt><dd>GDB, GEF, Pwntools, Ghidra, Nmap, Burp Suite</dd>
+        <dt>labs</dt><dd>Hack The Box, pwn.college, OST2</dd>
+        <dt>status</dt><dd>CPTS Preparation / Cyber Operations Focus</dd>
+        <dt>open_to</dt><dd>Offensive Security Research &amp; Technical Projects</dd>
       </dl>
+    </section>
+
+    <div class="wrap cols">
+      <section class="panel">
+        <h2 class="ctx">roadmap</h2>
+        <ol class="todo">
+          <li class="done">
+            <h3>Linux &amp; Low-Level Foundations</h3>
+            <p>Deep dive into C programming, Assembly x86/x64, Linux internals, and core networking concepts.</p>
+          </li>
+          <li class="done">
+            <h3>Binary Exploitation &amp; Reverse Engineering</h3>
+            <p>Hands-on practice on pwn.college, OST2, and reverse engineering challenges (Binary Bomb, GDB/GEF workflows).</p>
+          </li>
+          <li class="done">
+            <h3>Hack The Box Academy Grinding</h3>
+            <p>Completing offensive paths, penetration testing modules, and privilege escalation labs on HTB Academy.</p>
+          </li>
+          <li class="next">
+            <h3>HTB CPTS Certification</h3>
+            <p>Professional penetration testing certification focusing on web, network infrastructure, and Active Directory.</p>
+          </li>
+          <li>
+            <h3>Advanced Exploitation &amp; Research</h3>
+            <p>Deepening knowledge in post-quantum cryptography, advanced kernel exploitation, and automated security tooling.</p>
+          </li>
+        </ol>
+      </section>
+
+      <section class="panel">
+        <h2 class="ctx">ls ~/tools</h2>
+        <dl class="ls">
+          <dt>recon</dt><dd><span>Nmap</span><span>ffuf</span><span>dig</span><span>smbclient</span><span>Wireshark</span></dd>
+          <dt>web</dt><dd><span>Burp Suite</span><span>sqlmap</span><span>curl</span><span>OWASP ZAP</span></dd>
+          <dt>reversing</dt><dd><span>GDB</span><span>pwndbg</span><span>GEF</span><span>Pwntools</span><span>Ghidra</span><span>IDA</span></dd>
+          <dt>post-exploit</dt><dd><span>GTFOBins</span><span>Metasploit</span><span>Impacket</span><span>Hydra</span><span>John</span></dd>
+          <dt>langs</dt><dd><span>C</span><span>Assembly x86/x64</span><span>Python</span><span>Bash</span></dd>
+          <dt>env</dt><dd><span>Kali Linux</span><span>Debian / Pop!_OS</span><span>VS Code</span><span>Obsidian</span></dd>
+        </dl>
+        <p class="hint">No proficiency scores: these are the tools I regularly use in labs, challenges, and development.</p>
+      </section>
     </div>
+  </main>
+
+  <footer class="eof">
+    <span>-- EOF --</span>
+    <span>© 2026 retr0x59 · <a href="https://github.com/retr0x59" target="_blank" rel="noopener">github</a></span>
+  </footer>
+
+  <div class="term" id="term" hidden>
+    <div class="grip" id="termGrip" title="Drag to resize"></div>
+    <div class="head">shell <button id="termClose" aria-label="Close shell">[x]</button></div>
+    <div class="output" id="termOut" aria-live="polite"></div>
+    <div class="input"><label for="termIn">$</label><input id="termIn" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="help"></div>
   </div>
-</section>
-<section class="block tight">
-  <div class="wrap" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:48px" id="trayectoria">
-    <div>
-      <div class="head rv" style="display:block">
-        <div class="eyebrow">Journey</div>
-        <h2>Technical Roadmap & Progress</h2>
-      </div>
-      <div class="tl">
-        <div class="done rv">
-          <time>MILESTONE</time>
-          <h3>Linux & Low-Level Foundations</h3>
-          <p>Deep dive into C programming, Assembly x86/x64, Linux internals, and core networking concepts.</p>
-        </div>
-        <div class="done rv">
-          <time>MILESTONE</time>
-          <h3>Binary Exploitation & Reverse Engineering</h3>
-          <p>Hands-on practice on pwn.college, OST2, and reverse engineering challenges (Binary Bomb, GDB/GEF workflows).</p>
-        </div>
-        <div class="done rv">
-          <time>MILESTONE</time>
-          <h3>Hack The Box Academy Grinding</h3>
-          <p>Completing offensive paths, penetration testing modules, and privilege escalation labs on HTB Academy.</p>
-        </div>
-        <div class="next rv">
-          <time>NEXT</time>
-          <h3>HTB CPTS Certification</h3>
-          <p>Professional penetration testing certification focusing on web, network infrastructure, and Active Directory.</p>
-        </div>
-        <div class="next rv">
-          <time>FUTURE</time>
-          <h3>Advanced Exploitation & Research</h3>
-          <p>Deepening knowledge in post-quantum cryptography, advanced kernel exploitation, and automated security tooling.</p>
-        </div>
-      </div>
-    </div>
-    <div>
-      <div class="head rv" style="display:block">
-        <div class="eyebrow">Toolbox</div>
-        <h2>Tools & Technologies</h2>
-        <p style="margin-top:10px">No artificial proficiency scores. These are tools and environments I regularly use in labs, challenges, and development.</p>
-      </div>
-      <div class="skills" style="grid-template-columns:1fr 1fr">
-        <div class="card rv spot">
-          <h3>Recon & Network</h3>
-          <div class="stack"><span>Nmap</span><span>ffuf</span><span>dig</span><span>smbclient</span><span>Wireshark</span></div>
-        </div>
-        <div class="card rv spot">
-          <h3>Web Application</h3>
-          <div class="stack"><span>Burp Suite</span><span>sqlmap</span><span>curl</span><span>OWASP ZAP</span></div>
-        </div>
-        <div class="card rv spot">
-          <h3>Low-Level & Reversing</h3>
-          <div class="stack"><span>GDB</span><span>pwndbg</span><span>GEF</span><span>Pwntools</span><span>Ghidra</span><span>IDA</span></div>
-        </div>
-        <div class="card rv spot">
-          <h3>Post-Exploitation & Pwn</h3>
-          <div class="stack"><span>GTFOBins</span><span>Metasploit</span><span>Impacket</span><span>Hydra</span><span>John</span></div>
-        </div>
-        <div class="card rv spot">
-          <h3>Core Languages</h3>
-          <div class="stack"><span>C</span><span>Assembly x86/x64</span><span>Python</span><span>Bash</span></div>
-        </div>
-        <div class="card rv spot">
-          <h3>OS & Environments</h3>
-          <div class="stack"><span>Kali Linux</span><span>Debian / Pop!_OS</span><span>VS Code</span><span>Obsidian</span></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<section class="block tight" id="testimonios">
-  <div class="wrap">
-    <div class="head rv">
-      <div>
-        <div class="eyebrow">Recommendations</div>
-        <h2>Peer & Professional Feedback</h2>
-      </div>
-    </div>
-    <div class="locked rv">
-      <div class="lk">
-        <svg viewBox="0 0 24 24"><rect x="4" y="10.5" width="16" height="10.5" rx="2"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/><circle cx="12" cy="15.7" r="1.4"/></svg>
-      </div>
-      <div>
-        <div class="st">Under Preparation</div>
-        <h3>Section Currently Restricted</h3>
-        <p>Gathering feedback and endorsements from technical peers and collaborators. Submissions are reviewed before being published.</p>
-      </div>
-      <button class="btn line mag" id="tBtn">Leave Feedback</button>
-    </div>
-    <form class="tform" id="tForm" hidden>
-      <div><label for="tName">Name</label><input id="tName" required maxlength="60"></div>
-      <div><label for="tRole">Role or Context</label><input id="tRole" required maxlength="80" placeholder="Peer / Security Researcher"></div>
-      <div class="full"><label for="tMsg">Feedback</label><textarea id="tMsg" required maxlength="600"></textarea></div>
-      <div class="full" style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
-        <span class="note" id="tNote">Preview mode: submissions go live when database integration is active.</span>
-        <button class="btn primary" type="submit">Send</button>
-      </div>
-    </form>
-  </div>
-</section>
-</main>
-<footer>
-  <div class="logo">retr0x59<b>.</b>sec</div>
-  <p>Offensive Security, Penetration Testing & Low-Level Development.</p>
-  <div class="socials">
-    <a href="https://github.com/retr0x59" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub"><svg viewBox="0 0 24 24"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.36-3.88-1.36-.52-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.7 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg></a>
-  </div>
-  <div class="sm">© 2026 retr0x59 · All Rights Reserved</div>
-</footer>
-<button class="bot-btn" id="botBtn" aria-label="Selene"><span>☾</span> Selene</button>
-<div class="bot" id="bot" hidden>
-  <header><div>Selene<small>PORTFOLIO ASSISTANT</small></div><button id="botX" aria-label="Close">×</button></header>
-  <div class="msgs" id="botMsgs"></div>
-  <div class="chips" id="botChips"></div>
-</div>
-<div class="tboot" id="tboot" hidden></div>
-<div class="tdock" id="tdock" hidden>
-  <div class="grip" id="grip" title="Drag to resize"></div>
-  <div class="t-head"><i></i><i></i><i></i><span>retr0x59@kali: ~/portfolio</span><b>● LIVE</b></div>
-  <div class="t-out" id="tOut"></div>
-  <div class="t-in"><span class="pl">┌──(retr0x59㉿kali)-[~/portfolio]</span><div class="row"><span class="pl">└─$</span><input id="tIn" autocomplete="off" spellcheck="false" aria-label="Command" placeholder="type: help"></div></div>
-</div>
-<script src="assets/js/main.js"></script>
+
+  <script src="assets/js/main.js"></script>
 </body>
 </html>
