@@ -214,10 +214,14 @@ main, footer { position: relative; z-index: 1; }
 .whatis { min-height: 3.4em; margin-top: 18px; color: var(--dim); font-size: 13px; }
 .whatis b { font-weight: 400; color: var(--teal); }
 
-.plainlist { display: grid; gap: 4px; max-width: 74ch; margin: 0; }
-.plainlist dt { color: var(--amber); font-weight: 600; }
-.plainlist dt::before { content: "> "; color: var(--dim); }
-.plainlist dd { margin: 0 0 14px; }
+.plainlist { display: grid; gap: 6px; max-width: 74ch; }
+.plainlist summary { padding: 8px 10px; border-left: 2px solid var(--line-hi); color: var(--amber); font-weight: 600; list-style: none; cursor: pointer; }
+.plainlist summary::-webkit-details-marker { display: none; }
+.plainlist summary::before { content: "[+] "; color: var(--dim); font-weight: 400; }
+.plainlist summary:hover { background: var(--amber-lo); }
+.plainlist details[open] summary { border-left-color: var(--amber); }
+.plainlist details[open] summary::before { content: "[-] "; }
+.plainlist details p { padding: 6px 10px 12px 12px; border-left: 2px solid var(--amber); }
 
 /* ---------- journey: step through the stages like a debugger ---------- */
 .progress { margin-bottom: 18px; color: var(--dim); }
