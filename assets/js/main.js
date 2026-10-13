@@ -23,6 +23,7 @@
   const setTheme = t => {
     if (t === "amber") delete root.dataset.theme; else root.dataset.theme = t;
     disk.set("rx-theme", t);
+    dispatchEvent(new Event("rx-theme"));
   };
   if (THEMES.includes(disk.get("rx-theme", "amber"))) setTheme(disk.get("rx-theme", "amber"));
 
@@ -46,19 +47,102 @@
     addEventListener("scroll", step, { passive: true });
   }
 
-  /* ---------- pointer glow + scroll reveal ---------- */
-  if (fine && !reduce) {
-    let queued = false;
-    addEventListener("pointermove", e => {
-      if (queued) return;
-      queued = true;
-      requestAnimationFrame(() => {
-        root.style.setProperty("--mx", e.clientX + "px");
-        root.style.setProperty("--my", e.clientY + "px");
-        queued = false;
-      });
-    });
+  /* ---------- memory field: the pointer reads and rewrites the bytes behind the page ---------- */
+  {
+    const CW = 30, CH = 20, R = 130, FONT = '11px "IBM Plex Mono", ui-monospace, monospace';
+    const base = document.createElement("canvas"), hot = document.createElement("canvas");
+    base.className = hot.className = "memfx";
+    base.setAttribute("aria-hidden", "true");
+    hot.setAttribute("aria-hidden", "true");
+    document.body.prepend(base, hot);
+    const bg = base.getContext("2d"), fg = hot.getContext("2d");
+    const acc = () => getComputedStyle(root).getPropertyValue("--acc").trim() || "255, 176, 0";
+    let W = 0, H = 0, dpr = 1, cols = 0, rows = 0, val, en, raf = 0, waves = [];
+
+    const prep = g => { g.setTransform(dpr, 0, 0, dpr, 0, 0); g.font = FONT; g.textBaseline = "top"; };
+    const paintBase = i => {
+      const x = (i % cols) * CW, y = Math.floor(i / cols) * CH;
+      bg.clearRect(x, y, CW, CH);
+      bg.fillText(hex(val[i]), x + 7, y + 4);
+    };
+    const drawBase = () => {
+      prep(bg);
+      bg.clearRect(0, 0, W, H);
+      bg.fillStyle = "rgba(" + acc() + ", .05)";
+      for (let i = 0; i < val.length; i++) bg.fillText(hex(val[i]), (i % cols) * CW + 7, Math.floor(i / cols) * CH + 4);
+    };
+    const size = () => {
+      dpr = Math.min(devicePixelRatio || 1, 2);
+      W = innerWidth;
+      H = innerHeight;
+      [base, hot].forEach(cv => { cv.width = W * dpr; cv.height = H * dpr; });
+      cols = Math.ceil(W / CW);
+      rows = Math.ceil(H / CH);
+      val = new Uint8Array(cols * rows).map(() => Math.random() * 256 | 0);
+      en = new Float32Array(cols * rows);
+      drawBase();
+    };
+
+    const frame = () => {
+      raf = 0;
+      prep(fg);
+      fg.clearRect(0, 0, W, H);
+      const a = acc();
+      // a click sends a wave that overwrites what it crosses with 0x90 (NOP)
+      waves = waves.filter(w => (w.r += 10) < w.max);
+      for (const w of waves) {
+        for (let i = 0; i < val.length; i++) {
+          const d = Math.hypot((i % cols) * CW + CW / 2 - w.x, Math.floor(i / cols) * CH + CH / 2 - w.y);
+          if (Math.abs(d - w.r) < CW / 2) { en[i] = .7; val[i] = 0x90; paintBase(i); }
+        }
+      }
+      let live = waves.length > 0;
+      for (let i = 0; i < en.length; i++) {
+        const e = en[i];
+        if (e < .02) { en[i] = 0; continue; }
+        live = true;
+        fg.fillStyle = e > .85 ? "rgba(79, 214, 196, " + e * .8 + ")" : "rgba(" + a + ", " + (.05 + e * e * .45) + ")";
+        fg.fillText(hex(val[i]), (i % cols) * CW + 7, Math.floor(i / cols) * CH + 4);
+        en[i] = e * .94;
+      }
+      if (live) raf = requestAnimationFrame(frame);
+    };
+    const wake = () => { if (!raf) raf = requestAnimationFrame(frame); };
+
+    // address + value under the pointer, shown in the status bar
+    const mem = document.createElement("span");
+    mem.className = "rip mem";
+    mem.setAttribute("aria-hidden", "true");
+    if (rip) rip.before(mem);
+
+    const read = (x, y) => {
+      const c0 = Math.max(0, Math.floor((x - R) / CW)), c1 = Math.min(cols - 1, Math.floor((x + R) / CW));
+      const r0 = Math.max(0, Math.floor((y - R) / CH)), r1 = Math.min(rows - 1, Math.floor((y + R) / CH));
+      for (let r = r0; r <= r1; r++) for (let c = c0; c <= c1; c++) {
+        const i = r * cols + c, k = 1 - Math.hypot(c * CW + CW / 2 - x, r * CH + CH / 2 - y) / R;
+        if (k <= 0) continue;
+        if (k > en[i]) en[i] = k;
+        if (Math.random() < .06) { val[i] = Math.random() * 256 | 0; paintBase(i); }
+      }
+      const at = Math.min(rows - 1, Math.floor(y / CH)) * cols + Math.min(cols - 1, Math.floor(x / CW));
+      mem.textContent = "mem 0x" + (0x7ffd0000 + at).toString(16) + ": " + hex(val[at]);
+      wake();
+    };
+
+    size();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(drawBase);
+    addEventListener("resize", size);
+    addEventListener("rx-theme", drawBase);
+    if (!reduce) {
+      addEventListener("pointermove", e => read(e.clientX, e.clientY), { passive: true });
+      addEventListener("pointerdown", e => {
+        waves.push({ x: e.clientX, y: e.clientY, r: 0, max: 260 });
+        wake();
+      }, { passive: true });
+    }
   }
+
+  /* ---------- scroll reveal ---------- */
   if ("IntersectionObserver" in window && !reduce) {
     const io = new IntersectionObserver(es => es.forEach(e => {
       if (!e.isIntersecting) return;
