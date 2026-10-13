@@ -190,7 +190,9 @@
   // the memory panel is a small hex editor: click a cell, then type
   const dump = $("#hex");
   if (dump) {
-    const orig = new TextEncoder().encode(dump.textContent.trim());
+    // the text, padded to a full row with garbage like the uninitialized bytes after a string
+    const text = new TextEncoder().encode(dump.textContent.trim());
+    const orig = new Uint8Array(Math.ceil(text.length / 16) * 16).map((_, i) => (i < text.length ? text[i] : Math.random() * 256 | 0));
     let data = orig.slice(), cols = 0, sel = -1, side = "b", nib = 0;
     const cell = (tag, i) => $(`${tag}[data-i="${i}"]`, dump);
     const span = (tag, i, txt) => { const s = document.createElement(tag); s.dataset.i = i; s.textContent = txt; return s; };
